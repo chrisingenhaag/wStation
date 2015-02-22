@@ -10,15 +10,10 @@ import com.tinkerforge.TimeoutException;
 
 import tinker.services.WeatherStation;
 
+@RequestMapping("/sensors")
 @Controller
 @EnableAutoConfiguration
-public class SampleController {
-
-	@RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Hello World!";
-    }
+public class SampleController {	
 	
 	@RequestMapping("/humidity")
 	@ResponseBody
