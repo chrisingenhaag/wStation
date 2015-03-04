@@ -1,5 +1,7 @@
 package tinker.listeners;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.BrickletAmbientLight;
@@ -15,6 +17,9 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 	private BrickletHumidity brickletHumidity;
 	private BrickletBarometer brickletBarometer;
 
+	@Value("${tinker.cron.callbackinterval}")
+	private int callackInterval;
+	
 	public IPConnectionListener(IPConnection ipcon) {
 		this.ipcon = ipcon;
 	}
@@ -37,7 +42,7 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 			} else if (deviceIdentifier == BrickletAmbientLight.DEVICE_IDENTIFIER) {
 				try {
 					brickletAmbientLight = new BrickletAmbientLight(uid, ipcon);
-					brickletAmbientLight.setIlluminanceCallbackPeriod(10000);
+					brickletAmbientLight.setIlluminanceCallbackPeriod(callackInterval);
 					brickletAmbientLight
 							.addIlluminanceListener(new AmbientLightListener(
 									this));
@@ -49,7 +54,7 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 			} else if (deviceIdentifier == BrickletHumidity.DEVICE_IDENTIFIER) {
 				try {
 					brickletHumidity = new BrickletHumidity(uid, ipcon);
-					brickletHumidity.setHumidityCallbackPeriod(10000);
+					brickletHumidity.setHumidityCallbackPeriod(callackInterval);
 					brickletHumidity.addHumidityListener(new HumidityListener(
 							this));
 					System.out.println("Humidity initialized");
@@ -60,7 +65,7 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 			} else if (deviceIdentifier == BrickletBarometer.DEVICE_IDENTIFIER) {
 				try {
 					brickletBarometer = new BrickletBarometer(uid, ipcon);
-					brickletBarometer.setAirPressureCallbackPeriod(10000);
+					brickletBarometer.setAirPressureCallbackPeriod(callackInterval);
 					brickletBarometer
 							.addAirPressureListener(new BarometerListener(
 									brickletBarometer, this));

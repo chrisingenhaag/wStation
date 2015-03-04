@@ -109,7 +109,7 @@ public class WeatherStationImpl implements WeatherStation {
 	@Autowired
 	SensorStateRepository sensorStateRepository;
 	
-	@Scheduled(fixedRate=10000)
+	@Scheduled(cron="${tinker.cron.saveinterval}")
 	public void saveState() {
 		double temperature;
 		double airpressure;
@@ -134,6 +134,9 @@ public class WeatherStationImpl implements WeatherStation {
 		} catch (TimeoutException e) {
 			e.printStackTrace();
 		} catch (NotConnectedException e) {
+			e.printStackTrace();
+		} catch( NullPointerException e) {
+			System.out.println("Weatherstation not connected");
 			e.printStackTrace();
 		}
 		
