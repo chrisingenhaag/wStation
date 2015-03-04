@@ -17,7 +17,7 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 	private BrickletHumidity brickletHumidity;
 	private BrickletBarometer brickletBarometer;
 
-	@Value("${tinker.cron.callbackinterval}")
+	@Value("${tinker.sensor.callbackinterval}")
 	private int callackInterval;
 	
 	public IPConnectionListener(IPConnection ipcon) {
