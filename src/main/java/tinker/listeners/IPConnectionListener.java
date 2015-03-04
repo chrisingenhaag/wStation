@@ -17,8 +17,7 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 	private BrickletHumidity brickletHumidity;
 	private BrickletBarometer brickletBarometer;
 
-	@Value("${tinker.sensor.callbackinterval}")
-	private int callackInterval;
+	private static long callackInterval = 10000;
 	
 	public IPConnectionListener(IPConnection ipcon) {
 		this.ipcon = ipcon;
@@ -26,7 +25,7 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 
 	public void enumerate(String uid, String connectedUid, char position,
 			short[] hardwareVersion, short[] firmwareVersion,
-			int deviceIdentifier, short enumerationType) {
+			int deviceIdentifier, short enumerationType) {		
 		if (enumerationType == IPConnection.ENUMERATION_TYPE_CONNECTED
 				|| enumerationType == IPConnection.ENUMERATION_TYPE_AVAILABLE) {
 			if (deviceIdentifier == BrickletLCD20x4.DEVICE_IDENTIFIER) {
@@ -81,7 +80,7 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 	public void connected(short connectedReason) {
 		if (connectedReason == IPConnection.CONNECT_REASON_AUTO_RECONNECT) {
 			System.out.println("Auto Reconnect");
-
+			
 			while (true) {
 				try {
 					ipcon.enumerate();
