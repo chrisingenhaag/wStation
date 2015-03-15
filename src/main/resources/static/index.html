@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<link rel="stylesheet"
+	href="./bower_components/bootstrap-css-only/css/bootstrap.min.css" />
+</head>
+<body ng-app="wStation">
+	<div class="container" ng-controller="SensorStateListCtrl">
+		<h1>tinkerforge weatherstation</h1>
+		<div class="row">
+			<div class="col-md-6">
+				<select class="form-control" ng-model="orderProp"
+					ng-change="refresh()">
+					<option value="createdDate">Date</option>
+					<option value="temperature">Temperature</option>
+					<option value="airpressure">Airpressure</option>
+					<option value="humidity">Humidity</option>
+					<option value="illuminance">Illuminance</option>
+				</select>
+			</div>
+			<div class="col-md-6">
+				<select class="form-control" ng-model="orderBy"
+					ng-change="refresh()">
+					<option value="asc">Ascending</option>
+					<option value="desc">Descending</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<button class="btn btn-default" ng-click="previousPage()">Prev</button>
+				<button class="btn btn-default pull-right" ng-click="nextPage()">Next</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-striped table-hover">
+					<tr>
+						<th>Date</th>
+						<th>Temperature</th>
+						<th>Humidity</th>
+						<th>Airpressure</th>
+						<th>Illuminance</th>
+					</tr>
+					<tr ng-repeat="state in sensorStates._embedded.sensorState">
+						<td>{{ state.createdDate.millis | date:'yyyy-MM-dd HH:mm:ss Z' }}</td>
+						<td>{{ state.temperature }} °C</td>
+						<td>{{ state.humidity }} %</td>
+						<td>{{ state.airpressure }} mb</td>
+						<td>{{ state.illuminance }} lx</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+	</div>
+	<script type="text/javascript"
+		src="./bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript"
+		src="./bower_components/angular-resource/angular-resource.min.js"></script>
+	<script type="text/javascript" src="./app/app.js"></script>
+	<script type="text/javascript" src="./app/services.js"></script>
+	<script type="text/javascript" src="./app/controllers.js"></script>
+</body>
+</html>

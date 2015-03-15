@@ -14,9 +14,9 @@ import tinker.data.entities.SensorState;
 @RepositoryRestResource(collectionResourceRel = "sensorState", path = "sensorState")
 public interface SensorStateRepository extends PagingAndSortingRepository<SensorState, Long> {
 
-	public List<SensorState> findByCreatedDateBetween(@Param("start") @DateTimeFormat(pattern="yyyy-MM-dd-hh-mm") DateTime start, @Param("end") @DateTimeFormat(pattern="yyyy-MM-dd-hh-mm") DateTime end);
+	public List<SensorState> findByCreatedDateBetween(@Param("start") @DateTimeFormat(pattern="yyyy-MM-dd-HH-mm") DateTime start, @Param("end") @DateTimeFormat(pattern="yyyy-MM-dd-HH-mm") DateTime end);
 	
 	@Query("select avg(x.temperature) from SensorState x where x.createdDate between :start and :end")
-	public double getAverageTemperatureBetween(@Param("start") @DateTimeFormat(pattern="yyyy-MM-dd-hh-mm") DateTime start, @Param("end") @DateTimeFormat(pattern="yyyy-MM-dd-hh-mm") DateTime end);
+	public double getAverageTemperatureBetween(@Param("start") @DateTimeFormat(pattern="yyyy-MM-dd-HH-mm") DateTime start, @Param("end") @DateTimeFormat(pattern="yyyy-MM-dd-HH-mm") DateTime end);
 	
 }

@@ -2,5 +2,6 @@
 .project
 .settings/
 .gradle/
+node_modules/
 build
 bin
