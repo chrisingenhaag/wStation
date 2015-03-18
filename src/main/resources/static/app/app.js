@@ -1,3 +1,3 @@
 (function(angular) {
-  angular.module("wStation", ['ngRoute','wStation.services','wStation.controllers']);
+  angular.module("wStation", ['wStation.services','wStation.controllers']);
 }(angular));
