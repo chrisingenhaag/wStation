@@ -1,8 +1,5 @@
 package tinker.services;
 
-import java.sql.Date;
-import java.time.LocalDate;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -128,7 +125,10 @@ public class WeatherStationImpl implements WeatherStation {
 			s.setHumidity(humidity);
 			s.setIlluminance(illuminance);
 			s.setTemperature(temperature);
-			s.setCreatedDate(Date.valueOf(LocalDate.now()));
+			
+			java.util.Date d = new java.util.Date();
+			
+			s.setCreatedDate(new java.sql.Date(d.getTime()));
 			System.out.println(s);
 			sensorStateRepository.save(s);
 			
