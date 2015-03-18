@@ -3,6 +3,7 @@ package tinker.services;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -125,10 +126,8 @@ public class WeatherStationImpl implements WeatherStation {
 			s.setHumidity(humidity);
 			s.setIlluminance(illuminance);
 			s.setTemperature(temperature);
-			
-			java.util.Date d = new java.util.Date();
-			
-			s.setCreatedDate(new java.sql.Date(d.getTime()));
+						
+			s.setCreatedDate(DateTime.now());
 			System.out.println(s);
 			sensorStateRepository.save(s);
 			

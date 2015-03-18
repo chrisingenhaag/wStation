@@ -1,7 +1,5 @@
 package tinker.listeners;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.BrickletAmbientLight;
