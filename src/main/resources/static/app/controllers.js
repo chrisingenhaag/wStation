@@ -5,7 +5,7 @@ wStationControllers.controller('SensorStateListCtrl', [ '$scope',
 
 			$scope.orderProp = 'createdDate';
 			$scope.orderBy = 'desc';
-			$scope.page = 1;
+			$scope.page = 0;
 
 			$scope.sensorStates = SensorState.query({
 				'sort' : $scope.orderProp + ',' + $scope.orderBy,
@@ -25,7 +25,7 @@ wStationControllers.controller('SensorStateListCtrl', [ '$scope',
 			};
 
 			$scope.previousPage = function() {
-				if ($scope.page > 1) {
+				if ($scope.page > 0) {
 					$scope.page--;
 					$scope.refresh();
 				}
