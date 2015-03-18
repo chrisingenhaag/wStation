@@ -1,16 +1,13 @@
 package tinker.data.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.joda.time.DateTime;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class SensorState implements Serializable {
@@ -25,8 +22,7 @@ public class SensorState implements Serializable {
 	private double humidity;
 	private double illuminance;
 	
-	@Column(length=273)
-	private DateTime createdDate;
+	private Date createdDate;
 
 	public SensorState() {
 	}
@@ -77,11 +73,11 @@ public class SensorState implements Serializable {
 		this.illuminance = illuminance;
 	}
 
-	public DateTime getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(DateTime createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 	

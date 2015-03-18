@@ -35,7 +35,7 @@ dependencies {
 	compile 'com.tinkerforge:tinkerforge:2.1.1'	
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
-    compile("joda-time:joda-time")
+    //compile("joda-time:joda-time")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
