@@ -1,0 +1,47 @@
+
+<div class="row">
+	<div class="col-md-6">
+		<select class="form-control" ng-model="orderProp"
+			ng-change="refresh()">
+			<option value="createdDate">Date</option>
+			<option value="temperature">Temperature</option>
+			<option value="airpressure">Airpressure</option>
+			<option value="humidity">Humidity</option>
+			<option value="illuminance">Illuminance</option>
+		</select>
+	</div>
+	<div class="col-md-6">
+		<select class="form-control" ng-model="orderBy" ng-change="refresh()">
+			<option value="asc">Ascending</option>
+			<option value="desc">Descending</option>
+		</select>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<button class="btn btn-default" ng-click="previousPage()">Prev</button>
+		<button class="btn btn-default pull-right" ng-click="nextPage()">Next</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-striped table-hover">
+			<tr>
+				<th>Date</th>
+				<th>Temperature</th>
+				<th>Humidity</th>
+				<th>Airpressure</th>
+				<th>Illuminance</th>
+			</tr>
+			<tr ng-repeat="state in sensorStates._embedded.sensorState">
+				<td>{{ state.createdDate | date:'dd.MM.yyyy HH:mm:ss' }}</td>
+				<td>{{ state.temperature }} °C</td>
+				<td>{{ state.humidity }} %</td>
+				<td>{{ state.airpressure }} mb</td>
+				<td>{{ state.illuminance }} lx</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
