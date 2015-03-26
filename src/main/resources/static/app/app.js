@@ -6,6 +6,10 @@ wStationApp.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : './partials/sensorStateList.html',
 		controller : 'SensorStateListCtrl',
 		name: 'Sensorhistorie'
+	}).when('/graph', {
+		templateUrl : './partials/sensorStateGraphs.html',
+		controller : 'SensorStateGraphCtrl',
+		name: 'Sensorgraph'
 	}).otherwise({
 		redirectTo : '/list'
 	});
@@ -27,7 +31,7 @@ wStationApp.factory('routeNavigation', function($route, $location) {
 			});
 		}
 	});
-	console.log($route.routes);
+
 	return {
 		routes : routes,
 		activeRoute : function(route) {

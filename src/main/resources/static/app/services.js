@@ -10,6 +10,14 @@ wStationServices.factory('SensorState', [ '$resource', function($resource) {
 				'size' : '10',
 				'page' : '1'
 			}
+		},
+		searchBetween : {
+			method: 'GET',
+			url: '/sensorState/search/findByCreatedDateBetween',
+			params : {
+				'start': '',
+				'end': ''
+			}
 		}
 	});
 } ]);
