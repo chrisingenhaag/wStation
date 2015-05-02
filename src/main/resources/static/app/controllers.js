@@ -7,10 +7,6 @@ wStationControllers.controller('SensorStateListCtrl', [ '$scope',
 			$scope.orderBy = 'desc';
 			$scope.page = 0;
 
-			SensorState.searchBetween({
-
-			});
-
 			$scope.sensorStates = SensorState.query({
 				'sort' : $scope.orderProp + ',' + $scope.orderBy,
 				'page' : $scope.page
@@ -34,12 +30,34 @@ wStationControllers.controller('SensorStateListCtrl', [ '$scope',
 					$scope.refresh();
 				}
 			};
-
-		} ]);
-
-wStationControllers.controller('SensorStateGraphCtrl', [ '$scope',
-		'd3Service', function($scope, d3Service) {
-
 			
+			$scope.remove = function(id) {
+				SensorState.remove({'sensorStateId': id});
+			}
 
 		} ]);
+
+wStationControllers.controller('GraphCtrl', ['$scope',
+    'SensorState', function($scope, SensorState){
+
+    var today = new Date();
+
+    SensorState.searchBetween({
+      'start': '2015-04-15-00-00',
+      'end': '2015-04-15-23-59'
+    }, function(data){
+      $scope.d3Data = data._embedded.sensorState;  
+    }); 
+
+    
+
+    $scope.title = "GraphCtrl";
+//    $scope.d3Data = [
+//      {name: "Greg", score:98},
+//      {name: "Ari", score:96},
+//      {name: "Loser", score: 48}
+//    ];
+    $scope.d3OnClick = function(item){
+      alert(item.name);
+    };
+  }]);

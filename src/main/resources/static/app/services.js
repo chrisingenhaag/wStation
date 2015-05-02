@@ -7,8 +7,10 @@ wStationServices
 						'$resource',
 						function($resource) {
 							return $resource(
-									'http://192.168.2.11:8080/sensorState',
-									{},
+									'http://192.168.2.11:8080/sensorState/:sensorStateId',
+									{
+										sensorStateId: '@sensorStateId'
+									},
 									{
 										// return $resource('/sensorState', {},
 										// {
@@ -19,6 +21,9 @@ wStationServices
 												'size' : '10',
 												'page' : '1'
 											}
+										},
+										remove : {
+											method : 'DELETE',
 										},
 										searchBetween : {
 											method : 'GET',
@@ -46,7 +51,7 @@ wStationServices.factory('d3Service', [ '$document', '$q', '$rootScope',
 			var scriptTag = $document[0].createElement('script');
 			scriptTag.type = 'text/javascript';
 			scriptTag.async = true;
-			scriptTag.src = '../bower_components/d3/d3.min.js';
+			scriptTag.src = '../bower_components/d3/d3.js';
 			scriptTag.onreadystatechange = function() {
 				if (this.readyState == 'complete')
 					onScriptLoad();

@@ -1,5 +1,5 @@
 var wStationApp = angular.module("wStation", [ 'ngRoute', 'wStation.services',
-		'wStation.controllers' ]);
+		'wStation.controllers','wStation.directives' ]);
 
 wStationApp.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/list', {
@@ -8,7 +8,7 @@ wStationApp.config([ '$routeProvider', function($routeProvider) {
 		name: 'Sensorhistorie'
 	}).when('/graph', {
 		templateUrl : './partials/sensorStateGraphs.html',
-		controller : 'SensorStateGraphCtrl',
+		controller : 'GraphCtrl',
 		name: 'Sensorgraph'
 	}).otherwise({
 		redirectTo : '/list'

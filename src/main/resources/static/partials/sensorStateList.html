@@ -33,6 +33,7 @@
 				<th>Humidity</th>
 				<th>Airpressure</th>
 				<th>Illuminance</th>
+				<th>Actions</th>
 			</tr>
 			<tr ng-repeat="state in sensorStates._embedded.sensorState">
 				<td>{{ state.createdDate | date:'dd.MM.yyyy HH:mm:ss' }}</td>
@@ -40,6 +41,7 @@
 				<td>{{ state.humidity }} %</td>
 				<td>{{ state.airpressure }} mb</td>
 				<td>{{ state.illuminance }} lx</td>
+				<td><a class="btn btn-danger" ng-click="remove(state.id)"><i class="icon-trash icon-white"></i> Delete</a></td>
 			</tr>
 		</table>
 	</div>
