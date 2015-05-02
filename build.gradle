@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.1.RELEASE'
+        springBootVersion = '1.2.3.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -28,6 +28,7 @@ repositories {
 
 
 dependencies {
+    compile("org.springframework.boot:spring-boot-autoconfigure")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("com.h2database:h2")

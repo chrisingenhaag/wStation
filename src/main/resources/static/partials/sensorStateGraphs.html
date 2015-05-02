@@ -1,3 +1,22 @@
-<h2>Hello graphs</h2>
+<h2>Graphical presentation</h2>
 
-<d3-lines data="d3Data" label="name" on-click="d3OnClick(item)"></d3-bars>
+<div class="row" style="margin-bottom: 20px;">
+	<div class="col-md-3">
+		<select class="form-control" ng-model="display"
+			ng-change="refresh()" >
+			<option ng-repeat="displayValue in displayValues" value="{{ displayValue.value }}">{{ displayValue.description }}</option>
+		</select>
+	</div>
+	<div class="col-md-3">
+		<input type="date" ng-model="date" ng-change="refresh()">
+		<a class="btn" ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</a>
+	</div>
+	
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<d3-lines data="d3Data" display="{{ display }}" label="name" on-click="d3OnClick(item)"></d3-bars>	
+	</div>
+</div>
+

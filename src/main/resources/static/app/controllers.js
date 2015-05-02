@@ -33,6 +33,7 @@ wStationControllers.controller('SensorStateListCtrl', [ '$scope',
 			
 			$scope.remove = function(id) {
 				SensorState.remove({'sensorStateId': id});
+				$scope.refresh();
 			}
 
 		} ]);
@@ -40,23 +41,25 @@ wStationControllers.controller('SensorStateListCtrl', [ '$scope',
 wStationControllers.controller('GraphCtrl', ['$scope',
     'SensorState', function($scope, SensorState){
 
-    var today = new Date();
+	$scope.date = new Date();
+	$scope.display = 'temperature';
 
-    SensorState.searchBetween({
-      'start': '2015-04-15-00-00',
-      'end': '2015-04-15-23-59'
-    }, function(data){
-      $scope.d3Data = data._embedded.sensorState;  
-    }); 
+	$scope.refresh = function() {
+	    SensorState.searchBetween({
+	        'start': $scope.date.format("yyyy-mm-dd")+'-00-00',
+	        'end': $scope.date.format("yyyy-mm-dd")+'-23-59'
+	      }, function(data){
+	        $scope.d3Data = data._embedded.sensorState;  
+	      });
+	};
 
-    
+	$scope.refresh();
 
-    $scope.title = "GraphCtrl";
-//    $scope.d3Data = [
-//      {name: "Greg", score:98},
-//      {name: "Ari", score:96},
-//      {name: "Loser", score: 48}
-//    ];
+	$scope.displayValues = [{"value":"temperature", "description": "Temperatur"},
+	                        {"value":"humidity", "description": "Luftfeuchtigkeit"},
+	                        {"value":"illuminance", "description": "Helligkeit"},
+	                        {"value":"airpressure", "description": "Druck"}];
+
     $scope.d3OnClick = function(item){
       alert(item.name);
     };

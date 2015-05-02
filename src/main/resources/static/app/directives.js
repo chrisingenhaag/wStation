@@ -37,76 +37,86 @@ wStationDirectives.directive('d3Lines', ['d3Service', function(d3Service) {
 	          svg.selectAll("*").remove();
 
 
-						// If we don't pass any data, return out of the element
-    				if (!data) return;
+	          // If we don't pass any data, return out of the element
+	          if (!data) return;
 
-	         	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	          var margin = {top: 20, right: 20, bottom: 30, left: 50},
 						    width = 960 - margin.left - margin.right,
 						    height = 500 - margin.top - margin.bottom;
 
-						    "2015-04-14T22:00:00.000Z"
+	        // "2015-04-14T22:00:00.000Z"
             var parseDate =  d3.time.format("%Y-%m-%d-%H:%M:%S");
 
             var myDateParse = function(date) {
+            	if(date instanceof Date)
+            		return date;
             	date = date.replace("T","-");
-            	date = date.replace(".000Z","");
+            	//date = date.replace(".000Z","");
+            	date = date.split(".")[0];
             	date = parseDate.parse(date);
             	return date;
             }
 
 
-						var x = d3.time.scale()
-						    .range([0, width]);
+			var x = d3.time.scale()
+			    .range([0, width]);
 
-						var y = d3.scale.linear()
-						    .range([height, 0]);
+			var y = d3.scale.linear()
+			    .range([height, 0]);
 
-						var xAxis = d3.svg.axis()
-						    .scale(x)
-						    .orient("bottom");
+			var xAxis = d3.svg.axis()
+			    .scale(x)
+			    .orient("bottom");
 
-						var yAxis = d3.svg.axis()
-						    .scale(y)
-						    .orient("left");
+			var yAxis = d3.svg.axis()
+			    .scale(y)
+			    .orient("left");
 
-						var line = d3.svg.line()
-						    .x(function(d) { return x(d.createdDate); })
-						    .y(function(d) { return y(d.temperature); });
+			var line = d3.svg.line()
+			    .x(function(d) { return x(d.createdDate); })
+			    .y(function(d) { return y(d[iAttrs.display]); })
+			    .interpolate("basis-open");
 
-						svg.attr("width", width + margin.left + margin.right)
-						    .attr("height", height + margin.top + margin.bottom)
-						  	.append("g")
-						    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			svg.attr("width", width + margin.left + margin.right)
+			    .attr("height", height + margin.top + margin.bottom)
+			  	.append("g")
+			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+			
+			  data.forEach(function(d) {
+			    d.createdDate = myDateParse(d.createdDate);
+			  });
+	
+			  x.domain(d3.extent(data, function(d) { return d.createdDate; }));
+			  y.domain(d3.extent(data, function(d) { return d[iAttrs.display]; }));
+	
+			  svg.append("g")
+			      .attr("class", "x axis")
+			      .attr("transform", "translate(" + margin.left + "," + height + ")")
+			      .call(xAxis)
+			      .append("Text")
+			      .attr("y", 6)
+			      .attr("dy", ".71em")
+			      .style("text-anchor", "end")
+			      .text("Time");
+	
+			  svg.append("g")
+			      .attr("class", "y axis")
+			      .attr("transform", "translate("+ margin.left +",0)")
+			      .call(yAxis)
+			    .append("text")
+			      .attr("transform", "rotate(-90)")
+			      .attr("y", 6)
+			      .attr("dy", ".71em")
+			      .style("text-anchor", "end")
+			      .text(iAttrs.display);
+	
+			  svg.append("path")
+			      .datum(data)
+			      .attr("class", "line")
+			      .attr("transform", "translate("+ margin.left +",0)")
+			      .attr("d", line);
 						
-					  data.forEach(function(d) {
-					    d.createdDate = myDateParse(d.createdDate);
-					    d.temperature = +d.temperature;
-					  });
-
-					  x.domain(d3.extent(data, function(d) { return d.createdDate; }));
-					  y.domain(d3.extent(data, function(d) { return d.temperature; }));
-
-					  svg.append("g")
-					      .attr("class", "x axis")
-					      .attr("transform", "translate(0," + height + ")")
-					      .call(xAxis);
-
-					  svg.append("g")
-					      .attr("class", "y axis")
-					      .call(yAxis)
-					    .append("text")
-					      .attr("transform", "rotate(-90)")
-					      .attr("y", 6)
-					      .attr("dy", ".71em")
-					      .style("text-anchor", "end")
-					      .text("Price ($)");
-
-					  svg.append("path")
-					      .datum(data)
-					      .attr("class", "line")
-					      .attr("d", line);
-					
 
 	        };
     	  });

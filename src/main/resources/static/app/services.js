@@ -7,7 +7,7 @@ wStationServices
 						'$resource',
 						function($resource) {
 							return $resource(
-									'http://192.168.2.11:8080/sensorState/:sensorStateId',
+									'/sensorState/:sensorStateId',
 									{
 										sensorStateId: '@sensorStateId'
 									},
@@ -27,7 +27,7 @@ wStationServices
 										},
 										searchBetween : {
 											method : 'GET',
-											url : 'http://192.168.2.11:8080/sensorState/search/findByCreatedDateBetween',
+											url : '/sensorState/search/findByCreatedDateBetween',
 											params : {
 												'start' : '',
 												'end' : ''
