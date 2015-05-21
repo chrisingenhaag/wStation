@@ -19,6 +19,16 @@ wStationControllers.controller('SensorStateListCtrl', [ '$scope',
 				});
 			};
 
+			$scope.firstPage = function() {
+				$scope.page = 0;
+				$scope.refresh();
+			};
+			
+			$scope.lastPage = function() {
+				$scope.page = $scope.sensorStates.page.totalPages -1;
+				$scope.refresh();
+			};
+			
 			$scope.nextPage = function() {
 				$scope.page++;
 				$scope.refresh();

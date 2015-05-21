@@ -24,4 +24,10 @@ public interface SensorStateRepository extends
 			@Param("start") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") DateTime start,
 			@Param("end") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") DateTime end);
 
+	public List<SensorState> findByCreatedDateBetweenOrderByTemperatureDesc(
+			@Param("start") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") DateTime start,
+			@Param("end") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") DateTime end);
+
+	
+	
 }

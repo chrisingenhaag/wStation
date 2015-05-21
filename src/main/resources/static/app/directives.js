@@ -40,12 +40,18 @@ wStationDirectives.directive('d3Lines', ['d3Service', function(d3Service) {
 	          // If we don't pass any data, return out of the element
 	          if (!data) return;
 
+	          var w = iElement[0].offsetWidth;
+	          
 	          var margin = {top: 20, right: 20, bottom: 30, left: 50},
-						    width = 960 - margin.left - margin.right,
+						    width = w - margin.left - margin.right,
 						    height = 500 - margin.top - margin.bottom;
 
+	          
+	          
+	          
 	        // "2015-04-14T22:00:00.000Z"
-            var parseDate =  d3.time.format("%Y-%m-%d-%H:%M:%S");
+            var parseDate =  d3.time.format("%Y-%m-%d-%H:%M:%S"),
+            	bisectDate = d3.bisector(function(d) { return d.createdDate; }).left;
 
             var myDateParse = function(date) {
             	if(date instanceof Date)
@@ -80,7 +86,7 @@ wStationDirectives.directive('d3Lines', ['d3Service', function(d3Service) {
 			svg.attr("width", width + margin.left + margin.right)
 			    .attr("height", height + margin.top + margin.bottom)
 			  	.append("g")
-			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			    .attr("transform", "translate("+ margin.left +"," + margin.top + ")");
 
 			
 			  data.forEach(function(d) {
@@ -100,24 +106,74 @@ wStationDirectives.directive('d3Lines', ['d3Service', function(d3Service) {
 			      .style("text-anchor", "end")
 			      .text("Time");
 	
-			  svg.append("g")
+			  	svg.append("g")
 			      .attr("class", "y axis")
 			      .attr("transform", "translate("+ margin.left +",0)")
 			      .call(yAxis)
-			    .append("text")
+			      .append("text")
 			      .attr("transform", "rotate(-90)")
 			      .attr("y", 6)
 			      .attr("dy", ".71em")
 			      .style("text-anchor", "end")
 			      .text(iAttrs.display);
 	
-			  svg.append("path")
+			  	svg.append("path")
 			      .datum(data)
 			      .attr("class", "line")
 			      .attr("transform", "translate("+ margin.left +",0)")
 			      .attr("d", line);
 						
-
+			  	var focus = svg.append("g")
+			      .attr("class", "focus")
+			      .attr("transform", "translate("+ margin.left +",0)")
+			      .style("display", "none");
+	
+			  	focus.append("circle")
+			      .attr("r", 4.5);
+	
+			  	focus.append("text")
+			      .attr("x", 9)
+			      .attr("dy", ".35em");
+	
+			  	/* append the x line
+			    focus.append("line")
+			        .attr("class", "x")
+			        .style("stroke", "blue")
+			        .style("stroke-dasharray", "3,3")
+			        .style("opacity", 0.5)
+			        .attr("y1", 0)
+			        .attr("y2", height);
+	
+			    // append the y line
+			    focus.append("line")
+			        .attr("class", "y")
+			        .style("stroke", "blue")
+			        .style("stroke-dasharray", "3,3")
+			        .style("opacity", 0.5)
+			        .attr("x1", 0)
+			        .attr("x2", width);*/
+			  
+			  svg.append("rect")
+			      .attr("class", "overlay")
+			      .attr("width", width)
+			      .attr("height", height)
+			      .attr("transform", "translate("+ margin.left +",0)")
+			      .on("mouseover", function() { focus.style("display", null); })
+			      .on("mouseout", function() { focus.style("display", "none"); })
+			      .on("mousemove", mousemove);
+	
+			  function mousemove() {
+			    var x0 = x.invert(d3.mouse(this)[0]),
+			        i = bisectDate(data, x0, 1),
+			        d0 = data[i - 1],
+			        d1 = data[i],
+			        d = x0 - d0.createdDate > d1.createdDate - x0 ? d1 : d0;
+			    focus.attr("transform", "translate(" + (x(d.createdDate)+ margin.left) +"," + y(d[iAttrs.display]) + ")");
+			    focus.select("text").text(d[iAttrs.display]);
+			  }
+			  
+			  
+			  
 	        };
     	  });
       }
