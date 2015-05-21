@@ -22,13 +22,23 @@
   stroke: steelblue;
   stroke-width: 1.5px;
 }
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+
 </style>
 
 
 </head>
 <body ng-app="wStation">
 	<div class="container">
-		<h1>tinkerforge weatherstation</h1>
+		<h1>Tinkerforge Wetterstation</h1>
 		<navigation></navigation>
 		<div ng-view></div>
 	</div>

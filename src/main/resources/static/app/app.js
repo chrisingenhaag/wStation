@@ -5,11 +5,11 @@ wStationApp.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/list', {
 		templateUrl : './partials/sensorStateList.html',
 		controller : 'SensorStateListCtrl',
-		name: 'Sensorhistorie'
+		name: 'Werteliste'
 	}).when('/graph', {
 		templateUrl : './partials/sensorStateGraphs.html',
 		controller : 'GraphCtrl',
-		name: 'Sensorgraph'
+		name: 'Graphische Darstellung'
 	}).otherwise({
 		redirectTo : '/list'
 	});

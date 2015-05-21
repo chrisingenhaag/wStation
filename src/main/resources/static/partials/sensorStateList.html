@@ -1,40 +1,38 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<select class="form-control" ng-model="orderProp"
-			ng-change="refresh()">
-			<option value="createdDate">Date</option>
-			<option value="temperature">Temperature</option>
-			<option value="airpressure">Airpressure</option>
-			<option value="humidity">Humidity</option>
-			<option value="illuminance">Illuminance</option>
-		</select>
-	</div>
-	<div class="col-md-6">
-		<select class="form-control" ng-model="orderBy" ng-change="refresh()">
-			<option value="asc">Ascending</option>
-			<option value="desc">Descending</option>
-		</select>
+		<div class="form-group">
+		  	<label class="control-label" for="sortby">Sortieren nach</label>
+		  	<select class="form-control" ng-model="orderProp"
+				ng-change="refresh()" id="sortby">
+				<option value="createdDate">Datum / Uhrzeit</option>
+				<option value="temperature">Temperatur</option>
+				<option value="airpressure">Luftdruck</option>
+				<option value="humidity">Luftfeuchtigkeit</option>
+				<option value="illuminance">Helligkeit</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label class="control-label" for="sort">Sortierreihenfolge</label>
+			<select class="form-control" ng-model="orderBy" ng-change="refresh()" id="sort">
+				<option value="asc">Aufsteigend</option>
+				<option value="desc">Absteigend</option>
+			</select>
+		</div>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-12">
-		<button class="btn btn-default" ng-click="previousPage()">Prev</button>
-		<button class="btn btn-default pull-right" ng-click="nextPage()">Next</button>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-12">
 		<table class="table table-striped table-hover">
 			<tr>
-				<th>Id</th>
-				<th>Date</th>
-				<th>Temperature</th>
-				<th>Humidity</th>
-				<th>Airpressure</th>
-				<th>Illuminance</th>
-				<th>Actions</th>
+				<th>#</th>
+				<th>Datum / Uhrzeit</th>
+				<th>Temperatur</th>
+				<th>Luftfeuchtigkeit</th>
+				<th>Luftdruck</th>
+				<th>Helligkeit</th>
+				<th></th>
 			</tr>
 			<tr ng-repeat="state in sensorStates._embedded.sensorState">
 				<td>{{ state.id }}</td>
@@ -49,3 +47,11 @@
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-md-4 col-md-offset-4">
+		<button class="btn btn-default" ng-click="firstPage()">First</button>
+		<button class="btn btn-default" ng-click="previousPage()">Prev</button>
+		<button class="btn btn-default" ng-click="nextPage()">Next</button>
+		<button class="btn btn-default" ng-click="lastPage()">Last</button>
+	</div>
+</div>
