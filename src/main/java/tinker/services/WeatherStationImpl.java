@@ -25,7 +25,7 @@ import com.tinkerforge.TimeoutException;
 @Scope("singleton")
 public class WeatherStationImpl implements WeatherStation {
 
-	private static final String HOST = "localhost";
+	private static final String HOST = "192.168.2.11";
 	private static final int PORT = 4223;
 	private static IPConnection ipcon = null;
 	private static IPConnectionListener ipConnectionListener = null;

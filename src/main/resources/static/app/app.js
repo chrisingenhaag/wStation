@@ -1,8 +1,11 @@
 var wStationApp = angular.module("wStation", [ 'ngRoute', 'wStation.services',
 		'wStation.controllers','wStation.directives' ]);
 
-wStationApp.config([ '$routeProvider', function($routeProvider) {
-	$routeProvider.when('/list', {
+wStationApp.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+	$routeProvider.when('/', {
+		templateUrl : './partials/home.html',
+		controller : 'HomeCtrl'
+	}).when('/list', {
 		templateUrl : './partials/sensorStateList.html',
 		controller : 'SensorStateListCtrl',
 		name: 'Werteliste'
@@ -10,9 +13,17 @@ wStationApp.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : './partials/sensorStateGraphs.html',
 		controller : 'GraphCtrl',
 		name: 'Graphische Darstellung'
+	}).when('/login', {
+		templateUrl : './partials/login.html',
+		controller : 'NavigationCtrl',
+		name: 'Login'
 	}).otherwise({
-		redirectTo : '/list'
+		redirectTo : '/'
 	});
+
+  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
+
 } ]);
 
 wStationApp.run(function($rootScope, $location, $route) {
