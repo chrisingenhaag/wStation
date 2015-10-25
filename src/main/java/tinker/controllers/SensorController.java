@@ -13,7 +13,7 @@ import tinker.services.WeatherStation;
 @RequestMapping("/sensors")
 @Controller
 @EnableAutoConfiguration
-public class SampleController {	
+public class SensorController {	
 	
 	@RequestMapping("/humidity")
 	@ResponseBody
@@ -56,7 +56,7 @@ public class SampleController {
 	
 	@RequestMapping("/temperature")
 	@ResponseBody
-	double start() {
+	double getTemperature() {
 		try {
 			return weatherStation.getBrickletBarometer().getChipTemperature()/100.0;
 		} catch (TimeoutException e) {
