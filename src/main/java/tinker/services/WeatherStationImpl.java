@@ -5,6 +5,7 @@ import javax.annotation.PreDestroy;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,10 @@ import com.tinkerforge.TimeoutException;
 @Scope("singleton")
 public class WeatherStationImpl implements WeatherStation {
 
-	private static final String HOST = "192.168.2.11";
-	private static final int PORT = 4223;
+	@Value("${tinker.ip}")
+	private String HOST;
+	@Value("${tinker.port}")
+	private int PORT;
 	private static IPConnection ipcon = null;
 	private static IPConnectionListener ipConnectionListener = null;
 
