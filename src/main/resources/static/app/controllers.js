@@ -58,6 +58,7 @@ wStationControllers.controller('GraphCtrl', ['$scope',
 	$scope.date = new Date();
 	$scope.maxDate = new Date();
   	$scope.format = 'dd.MM.yyyy';
+	$scope.minmaxvalues = [0,1500];
 
 	$scope.open = function($event) {
     	$scope.status.opened = true;
@@ -96,6 +97,7 @@ wStationControllers.controller('GraphCtrl', ['$scope',
 	        	return [new Date(d.createdDate).getTime(), d.airpressure];
 	        });
 	        $scope.d3Data = data;
+	        
 	      });
 	};
 
