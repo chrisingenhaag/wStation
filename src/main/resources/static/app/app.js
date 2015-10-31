@@ -1,5 +1,5 @@
 var wStationApp = angular.module("wStation", [ 'ngRoute', 'wStation.services',
-		'wStation.controllers','wStation.directives' ]);
+		'wStation.controllers','wStation.directives','ui.date','nvd3ChartDirectives' ]);
 
 wStationApp.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
 	$routeProvider.when('/', {
