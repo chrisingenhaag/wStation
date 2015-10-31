@@ -55,12 +55,27 @@ wStationControllers.controller('SensorStateListCtrl', [ '$scope',
 wStationControllers.controller('GraphCtrl', ['$scope',
     'SensorState', function($scope, SensorState){
 
-	$scope.date = new Date().format("yyyy-mm-dd");
+	$scope.date = new Date();
+	$scope.maxDate = new Date();
+  	$scope.format = 'dd.MM.yyyy';
+
+	$scope.open = function($event) {
+    	$scope.status.opened = true;
+  	};
+
+  	$scope.dateOptions = {
+    	formatYear: 'yy',
+    	startingDay: 1
+  	};
+
+  	$scope.status = {
+    	opened: false
+  	};
 
 	$scope.refresh = function() {
 	    SensorState.searchBetween({
-	        'start': $scope.date+'-00-00',
-	        'end': $scope.date+'-23-59'
+	        'start': new Date($scope.date).format("yyyy-mm-dd")+'-00-00',
+	        'end': new Date($scope.date).format("yyyy-mm-dd")+'-23-59'
 	      }, function(data){
 	        var d = data._embedded.sensorState;
 	        var data = [{key: 'Temperatur', values:[]},
