@@ -55,28 +55,42 @@ wStationControllers.controller('SensorStateListCtrl', [ '$scope',
 wStationControllers.controller('GraphCtrl', ['$scope',
     'SensorState', function($scope, SensorState){
 
-	$scope.date = new Date();
-	$scope.display = 'temperature';
+	$scope.date = new Date().format("yyyy-mm-dd");
 
 	$scope.refresh = function() {
 	    SensorState.searchBetween({
-	        'start': $scope.date.format("yyyy-mm-dd")+'-00-00',
-	        'end': $scope.date.format("yyyy-mm-dd")+'-23-59'
+	        'start': $scope.date+'-00-00',
+	        'end': $scope.date+'-23-59'
 	      }, function(data){
-	        $scope.d3Data = data._embedded.sensorState;  
+	        var d = data._embedded.sensorState;
+	        var data = [{key: 'Temperatur', values:[]},
+	        			{key: 'Luftfeuchtigkeit', values:[]},
+	        			{key: 'Helligkeit', values:[]},
+	        			{key: 'Luftdruck', values:[]}];
+	        			
+	        data[0].values = d.map(function(d) {
+	        	return [new Date(d.createdDate).getTime(), d.temperature];
+	        });
+	        data[1].values = d.map(function(d) {
+	        	return [new Date(d.createdDate).getTime(), d.humidity];
+	        });
+	        data[2].values = d.map(function(d) {
+	        	return [new Date(d.createdDate).getTime(), d.illuminance];
+	        });
+	        data[3].values = d.map(function(d) {
+	        	return [new Date(d.createdDate).getTime(), d.airpressure];
+	        });
+	        $scope.d3Data = data;
 	      });
 	};
 
-	$scope.refresh();
+	$scope.xAxisTickFormatFunction = function(){
+                return function(d){
+                    return d3.time.format('%H:%M')(new Date(d));
+                }
+            }
 
-	$scope.displayValues = [{"value":"temperature", "description": "Temperatur"},
-	                        {"value":"humidity", "description": "Luftfeuchtigkeit"},
-	                        {"value":"illuminance", "description": "Helligkeit"},
-	                        {"value":"airpressure", "description": "Druck"}];
-
-    $scope.d3OnClick = function(item){
-      alert(item.name);
-    };
+	$scope.refresh();    
   }]);
 
 wStationControllers.controller('HomeCtrl', ['$scope', function($scope) {

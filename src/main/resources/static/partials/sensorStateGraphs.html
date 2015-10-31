@@ -1,22 +1,27 @@
-<h2>Graphical presentation</h2>
+<h2>Grafische Darstellung</h2>
 
 <div class="row" style="margin-bottom: 20px;">
-	<div class="col-md-3">
-		<select class="form-control" ng-model="display"
-			ng-change="refresh()" >
-			<option ng-repeat="displayValue in displayValues" value="{{ displayValue.value }}">{{ displayValue.description }}</option>
-		</select>
+	<div class="col-md-2">
+		<input class="form-control" ui-date ng-model="date" ui-date-format="yy-mm-dd" ng-change="refresh()">
 	</div>
-	<div class="col-md-3">
-		<input type="date" ng-model="date" ng-change="refresh()">
-		<a class="btn" ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</a>
+	<div class="col-md-2 pull-right">
+		<a class="btn btn-info pull-right" ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</a>
 	</div>
-	
 </div>
 
 <div class="row">
 	<div class="col-md-12">
-		<d3-lines data="d3Data" display="{{ display }}" label="name" on-click="d3OnClick(item)"></d3-bars>	
+		<nvd3-line-chart
+        	data="d3Data"
+	        showXAxis="true"
+	        showYAxis="true"
+	        tooltips="true"
+	        xAxisTickFormat="xAxisTickFormatFunction()"
+	        interactive="true"
+	        interpolate="bundle"
+	        showLegend="true">
+    	</nvd3-line-chart>
+	
 	</div>
 </div>
 

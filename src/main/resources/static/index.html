@@ -4,37 +4,8 @@
 <link rel="stylesheet"
 	href="./bower_components/bootstrap-css-only/css/bootstrap.min.css" />
 
-<style>
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-.line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}
-.overlay {
-  fill: none;
-  pointer-events: all;
-}
-
-.focus circle {
-  fill: none;
-  stroke: steelblue;
-}
-
-</style>
-
-
+<link rel="stylesheet" href="./bower_components/jquery-ui/themes/smoothness/jquery-ui.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body ng-app="wStation">
 	<div class="container">
@@ -43,18 +14,31 @@
 		<div ng-view></div>
 	</div>
 
+	
+	<script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
+
 	<script type="text/javascript"
 		src="./bower_components/angular/angular.min.js"></script>
 	<script type="text/javascript"
 		src="./bower_components/angular-resource/angular-resource.min.js"></script>
 	<script type="text/javascript"
 		src="./bower_components/angular-route/angular-route.min.js"></script>	
+	
 	<script type="text/javascript" src="./app/app.js"></script>
 	<script type="text/javascript" src="./app/services.js"></script>
 	<script type="text/javascript" src="./app/controllers.js"></script>
 	<script type="text/javascript" src="./app/directives.js"></script>
 	
 	<script type="text/javascript" src="./js/helper.js"></script>
+	
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/d3/d3.js"></script>
+	<script src="bower_components/nvd3/build/nv.d3.js"></script>
+	<script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+	<link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css"/>
+	
+	<script type="text/javascript" src="./bower_components/jquery-ui/jquery-ui.js"></script>
+	<script type="text/javascript" src="./bower_components/angular-ui-date/src/date.js"></script>
 	
 </body>
 </html>

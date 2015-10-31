@@ -1,5 +1,5 @@
 var wStationApp = angular.module("wStation", [ 'ngRoute', 'wStation.services',
-		'wStation.controllers','wStation.directives' ]);
+		'wStation.controllers','wStation.directives','ui.date','nvd3ChartDirectives' ]);
 
 wStationApp.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
 	$routeProvider.when('/', {
@@ -47,18 +47,6 @@ wStationApp.factory('routeNavigation', function($route, $location) {
 		routes : routes,
 		activeRoute : function(route) {
 			return route.path === $location.path();
-		}
-	};
-});
-
-wStationApp.directive('navigation', function(routeNavigation) {
-	return {
-		restrict : "E",
-		replace : true,
-		templateUrl : "./directives/navigation-directive.tpl.html",
-		controller : function($scope) {
-			$scope.routes = routeNavigation.routes;
-			$scope.activeRoute = routeNavigation.activeRoute;
 		}
 	};
 });
