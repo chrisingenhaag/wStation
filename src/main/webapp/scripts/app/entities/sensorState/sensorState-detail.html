@@ -1,0 +1,62 @@
+
+<div>
+    <h2><span translate="wStationApp.sensorState.detail.title">SensorState</span> {{sensorState.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate="entity.detail.field">Field</th>
+                <th translate="entity.detail.value">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span translate="wStationApp.sensorState.temperature">Temperature</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{sensorState.temperature}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="wStationApp.sensorState.airpressure">Airpressure</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{sensorState.airpressure}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="wStationApp.sensorState.humidity">Humidity</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{sensorState.humidity}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="wStationApp.sensorState.illuminance">Illuminance</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{sensorState.illuminance}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="wStationApp.sensorState.createddate">Createddate</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{sensorState.createddate | date:'medium'}}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

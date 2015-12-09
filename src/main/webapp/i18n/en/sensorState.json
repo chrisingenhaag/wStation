@@ -1,0 +1,25 @@
+{
+    "wStationApp": {
+        "sensorState" : {
+            "home": {
+                "title": "SensorStates",
+                "createLabel": "Create a new SensorState",
+                "createOrEditLabel": "Create or edit a SensorState"
+            },
+            "created": "A new SensorState is created with identifier {{ param }}",
+            "updated": "A SensorState is updated with identifier {{ param }}",
+            "deleted": "A SensorState is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete SensorState {{ id }}?"
+            },
+            "detail": {
+                "title": "SensorState"
+            },
+            "temperature": "Temperature",
+            "airpressure": "Airpressure",
+            "humidity": "Humidity",
+            "illuminance": "Illuminance",
+            "createddate": "Createddate"
+        }
+    }
+}

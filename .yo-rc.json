@@ -1,0 +1,24 @@
+{
+  "generator-jhipster": {
+    "baseName": "wStation",
+    "packageName": "de.ingenhaag.tinkerwstation",
+    "packageFolder": "de/ingenhaag/tinkerwstation",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Memory",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "no",
+    "useSass": false,
+    "buildTool": "gradle",
+    "frontendBuilder": "grunt",
+    "enableTranslation": true,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "cd0ff7a059e25119ff0529ae6a67772176fec497",
+    "testFrameworks": [
+      "gatling"
+    ]
+  }
+}

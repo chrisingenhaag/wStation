@@ -1,0 +1,56 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="mySensorStateLabel" translate="wStationApp.sensorState.home.createOrEditLabel">Create or edit a SensorState</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="sensorState.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="wStationApp.sensorState.temperature" for="field_temperature">Temperature</label>
+            <input type="number" class="form-control" name="temperature" id="field_temperature"
+                    ng-model="sensorState.temperature"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="wStationApp.sensorState.airpressure" for="field_airpressure">Airpressure</label>
+            <input type="number" class="form-control" name="airpressure" id="field_airpressure"
+                    ng-model="sensorState.airpressure"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="wStationApp.sensorState.humidity" for="field_humidity">Humidity</label>
+            <input type="number" class="form-control" name="humidity" id="field_humidity"
+                    ng-model="sensorState.humidity"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="wStationApp.sensorState.illuminance" for="field_illuminance">Illuminance</label>
+            <input type="number" class="form-control" name="illuminance" id="field_illuminance"
+                    ng-model="sensorState.illuminance"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="wStationApp.sensorState.createddate" for="field_createddate">Createddate</label>
+            <input type="datetime-local" class="form-control" name="createddate" id="field_createddate"
+                    ng-model="sensorState.createddate"
+                     />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

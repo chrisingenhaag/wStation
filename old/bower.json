@@ -1,0 +1,13 @@
+{
+  "name": "ng-spring-boot",
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-resource": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "bootstrap-css-only": "~3.3.0",
+    "d3": "~3.5.5",
+    "nvd3": "~1.8.1",
+    "angularjs-nvd3-directives": "~0.0.7",
+    "angular-bootstrap": "~0.14.3"
+  }
+}
