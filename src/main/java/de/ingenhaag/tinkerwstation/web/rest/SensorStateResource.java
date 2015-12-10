@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,4 +114,22 @@ public class SensorStateResource {
         sensorStateRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("sensorState", id.toString())).build();
     }
+    
+    /**
+     * GET  /sensorStatesBetween -> get all SensorStates between to ZonedDateTime values
+     */
+    @RequestMapping(value = "/sensorStatesBetween",
+        method = RequestMethod.DELETE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<SensorState>> findByCreatedDateBetween(@Param("start") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") ZonedDateTime start,
+			@Param("end") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") ZonedDateTime end) {
+    	log.debug("REST request to get all SensorStates between a date");
+    	return Optional.ofNullable(sensorStateRepository.findByCreateddateBetween(start, end))
+    			.map(sensorState -> new ResponseEntity<>(
+    					sensorState,
+    					HttpStatus.OK))
+    			.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    
 }
