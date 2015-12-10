@@ -12,6 +12,15 @@ angular.module('wStationApp')
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+			'searchBetween' : {
+				method : 'GET',
+				url : '/api/sensorStatesBetween',
+				isArray: true,
+				params : {
+					'start' : '',
+					'end' : ''
+				}
+			}
         });
     });

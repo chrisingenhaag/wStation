@@ -15,8 +15,8 @@ import java.util.List;
 public interface SensorStateRepository extends JpaRepository<SensorState,Long> {
 
 	public List<SensorState> findByCreateddateBetween(
-			@Param("start") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") ZonedDateTime start,
-			@Param("end") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") ZonedDateTime end);
+			@Param("start") ZonedDateTime start,
+			@Param("end") ZonedDateTime end);
 
 //	@Query("select avg(x.temperature) from SensorState x where x.createddate between :start and :end")
 //	public double getAverageTemperatureBetween(

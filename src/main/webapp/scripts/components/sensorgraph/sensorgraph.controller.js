@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wStationApp')
-	.controller('GraphCtrl', function($scope, SensorState){
+	.controller('GraphController', function($scope, SensorState){
 
 		$scope.date = new Date();
 		$scope.maxDate = new Date();
@@ -26,23 +26,23 @@ angular.module('wStationApp')
 		        'start': new Date($scope.date).format("yyyy-mm-dd")+'-00-00',
 		        'end': new Date($scope.date).format("yyyy-mm-dd")+'-23-59'
 		      }, function(data){
-		        var d = data._embedded.sensorState;
+		        var d = data;
 		        var data = [{key: 'Temperatur', values:[]},
 		        			{key: 'Luftfeuchtigkeit', values:[]},
 		        			{key: 'Helligkeit', values:[]},
 		        			{key: 'Luftdruck', values:[]}];
 		        			
 		        data[0].values = d.map(function(d) {
-		        	return [new Date(d.createdDate).getTime(), d.temperature];
+		        	return [new Date(d.createddate).getTime(), d.temperature];
 		        });
 		        data[1].values = d.map(function(d) {
-		        	return [new Date(d.createdDate).getTime(), d.humidity];
+		        	return [new Date(d.createddate).getTime(), d.humidity];
 		        });
 		        data[2].values = d.map(function(d) {
-		        	return [new Date(d.createdDate).getTime(), d.illuminance];
+		        	return [new Date(d.createddate).getTime(), d.illuminance];
 		        });
 		        data[3].values = d.map(function(d) {
-		        	return [new Date(d.createdDate).getTime(), d.airpressure];
+		        	return [new Date(d.createddate).getTime(), d.airpressure];
 		        });
 		        $scope.d3Data = data;
 		        

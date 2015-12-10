@@ -12,7 +12,7 @@ angular.module('wStationApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/components/sensorgraph/sensorgraph.html',
-                        controller: 'GraphCtrl'
+                        controller: 'GraphController'
                     }
                 },
                 resolve: {
