@@ -1,12 +1,13 @@
 package de.ingenhaag.tinkerwstation.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer;
 
 import de.ingenhaag.tinkerwstation.domain.SensorState;
 import de.ingenhaag.tinkerwstation.repository.SensorStateRepository;
 import de.ingenhaag.tinkerwstation.web.rest.util.HeaderUtil;
 import de.ingenhaag.tinkerwstation.web.rest.util.PaginationUtil;
+
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,8 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-import org.joda.time.DateTime;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -126,18 +125,22 @@ public class SensorStateResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<SensorState>> findByCreatedDateBetween(@Param("start") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") DateTime start,
-			@Param("end") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") DateTime end) {
-    	log.debug("REST request to get all SensorStates between a date");
+    public ResponseEntity<List<SensorState>> findByCreatedDateBetween(@RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") DateTime start,
+			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm") DateTime end) {
+    	log.debug("start {}",start);
+    	ZonedDateTime s = start.toGregorianCalendar().toZonedDateTime();
+    	ZonedDateTime e = end.toGregorianCalendar().toZonedDateTime();
+    	log.debug("REST request to get all SensorStates between {} and {}",s, e);
     	
-    	return new ResponseEntity<List<SensorState>>(sensorStateRepository.findAll(), HttpStatus.OK);
+    	List<SensorState> results = sensorStateRepository.findByCreateddateBetween(s, e);
+    	log.debug("results {}", results.size());
     	
-//    	return Optional.ofNullable(sensorStateRepository.findByCreateddateBetween(start.toGregorianCalendar().toZonedDateTime(),
-//    			end.toGregorianCalendar().toZonedDateTime()))
-//    			.map(sensorState -> new ResponseEntity<>(
-//    					sensorState,
-//    					HttpStatus.OK))
-//    			.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    	return new ResponseEntity<List<SensorState>>(sensorStateRepository.findAll(), HttpStatus.OK);
+    	return Optional.ofNullable(results)
+    			.map(sensorState -> new ResponseEntity<>(
+    					sensorState,
+    					HttpStatus.OK))
+    			.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     
 }
