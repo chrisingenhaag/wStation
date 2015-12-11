@@ -17,16 +17,16 @@
 			</p>
 		</div>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="inlineCheckbox1" ng-model="showValues.temperature" ng-change="refresh()" translate="wStationApp.sensorState.temperature"> temperature
+		  <input type="checkbox" id="inlineCheckbox1" ng-model="showValues.temperature" ng-change="refresh()" > {{ 'wStationApp.sensorState.temperature' | translate }}
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="inlineCheckbox2" ng-model="showValues.humidity" ng-change="refresh()" translate="wStationApp.sensorState.humidity"> humidity
+		  <input type="checkbox" id="inlineCheckbox2" ng-model="showValues.humidity" ng-change="refresh()" > {{ 'wStationApp.sensorState.humidity' | translate }}
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="inlineCheckbox3" ng-model="showValues.illuminance" ng-change="refresh()" translate="wStationApp.sensorState.illuminance"> illuminance
+		  <input type="checkbox" id="inlineCheckbox3" ng-model="showValues.illuminance" ng-change="refresh()" > {{ 'wStationApp.sensorState.illuminance' | translate }}
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="inlineCheckbox3" ng-model="showValues.airpressure" ng-change="refresh()" translate="wStationApp.sensorState.airpressure"> airpressure
+		  <input type="checkbox" id="inlineCheckbox3" ng-model="showValues.airpressure" ng-change="refresh()" > {{ 'wStationApp.sensorState.airpressure' | translate }}
 		</label>
 	</div>
 	<div class="col-md-2 pull-right">

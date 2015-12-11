@@ -18,6 +18,7 @@ angular.module('wStationApp')
                 resolve: {
                     mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
                         $translatePartialLoader.addPart('sensorgraph');
+                        $translatePartialLoader.addPart('sensorState');
                         return $translate.refresh();
                     }]
                 }
