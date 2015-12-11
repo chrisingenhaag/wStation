@@ -27,7 +27,7 @@ angular.module('wStationApp')
  They are written in English to avoid character encoding issues (not a perfect solution)
  */
     .constant('LANGUAGES', [
-        'en', 'fr'
+        'en', 'fr', 'de'
         //JHipster will add new languages here
     ]
 );

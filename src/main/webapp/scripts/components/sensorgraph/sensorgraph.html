@@ -13,7 +13,7 @@
 				</span>
 			</p>
 			<p class="input-group">
-				<a class="btn btn-default pull-right" ng-click="goForward()">Forward <i class="glyphicon glyphicon-chevron-right"></i></a>
+				<a class="btn btn-default pull-right" ng-disabled="!canGoForward()" ng-click="goForward()">Forward <i class="glyphicon glyphicon-chevron-right"></i></a>
 			</p>
 		</div>
 	</div>

@@ -7,31 +7,35 @@ angular.module('wStationApp')
 		$scope.maxDate = new Date();
 	  	$scope.format = 'dd.MM.yyyy';
 		$scope.minmaxvalues = [0,1500];
-	
+
 		$scope.open = function($event) {
 	    	$scope.status.opened = true;
 	  	};
-	
+
 	  	$scope.dateOptions = {
 	    	formatYear: 'yy',
 	    	startingDay: 1
 	  	};
-	
+
 	  	$scope.status = {
 	    	opened: false
 	  	};
-	
+
 		$scope.goBack = function() {
 			$scope.date.setDate($scope.date.getDate()-1);
-			$scope.refresh();    
-		}
-		
+			$scope.refresh();
+		};
+
 		$scope.goForward = function() {
-			if($scope.date.getDate() < new Date().getDate()) {
+			if($scope.canGoForward()) {
 				$scope.date.setDate($scope.date.getDate()+1);
 				$scope.refresh();
 			}
-		}		
+		};
+		$scope.canGoForward = function() {
+			return $scope.date.getDate() < new Date().getDate();
+		};
+
 
 		$scope.refresh = function() {
 		    SensorState.searchBetween({
@@ -43,7 +47,7 @@ angular.module('wStationApp')
 		        			{key: 'Luftfeuchtigkeit', values:[]},
 		        			{key: 'Helligkeit', values:[]},
 		        			{key: 'Luftdruck', values:[]}];
-		        			
+
 		        data[0].values = d.map(function(d) {
 		        	return [new Date(d.createddate).getTime(), d.temperature];
 		        });
@@ -57,15 +61,15 @@ angular.module('wStationApp')
 		        	return [new Date(d.createddate).getTime(), d.airpressure];
 		        });
 		        $scope.d3Data = data;
-		        
+
 		      });
 		};
-	
+
 		$scope.xAxisTickFormatFunction = function(){
 	                return function(d){
 	                    return d3.time.format('%H:%M')(new Date(d));
-	                }
-	            }
-	
-		$scope.refresh();    
+	                };
+	            };
+
+		$scope.refresh();
 	});
