@@ -1,14 +1,21 @@
 <h2>Grafische Darstellung</h2>
 
 <div class="row" style="margin-bottom: 20px;">
-	<div class="col-md-2">
-		<p class="input-group">
-			<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" is-open="status.opened" max-date="maxDate" datepicker-options="dateOptions" close-text="Close" ng-change="refresh()" show-button-bar="false"/>
-				<span class="input-group-btn">
-				<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>	
-			</span>
-		</p>
-		
+	<div class="col-md-6">
+		<div class="form-inline">
+			<p class="input-group">
+				<a class="btn btn-default pull-right" ng-click="goBack()"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+			</p>
+			<p class="input-group">
+				<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" is-open="status.opened" max-date="maxDate" datepicker-options="dateOptions" close-text="Close" ng-change="refresh()" show-button-bar="false"/>
+					<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>	
+				</span>
+			</p>
+			<p class="input-group">
+				<a class="btn btn-default pull-right" ng-click="goForward()">Forward <i class="glyphicon glyphicon-chevron-right"></i></a>
+			</p>
+		</div>
 	</div>
 	<div class="col-md-2 pull-right">
 		<a class="btn btn-info pull-right" ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</a>
@@ -24,10 +31,13 @@
 	        tooltips="true"
 	        xAxisTickFormat="xAxisTickFormatFunction()"
 	        forcey="minmaxvalues"
-	        interactive="true"
-	        interpolate="bundle"
+	        interpolate="linear"
 	        height="500"
-	        showLegend="true">
+	        showLegend="true"
+			clipEdge="true"
+			interactive="true"
+			tooltips="true"
+	        noData="keine Daten vorhanden!">
     	</nvd3-line-chart>
 	
 	</div>

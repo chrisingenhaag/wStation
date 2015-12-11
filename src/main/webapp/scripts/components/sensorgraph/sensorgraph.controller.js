@@ -21,6 +21,18 @@ angular.module('wStationApp')
 	    	opened: false
 	  	};
 	
+		$scope.goBack = function() {
+			$scope.date.setDate($scope.date.getDate()-1);
+			$scope.refresh();    
+		}
+		
+		$scope.goForward = function() {
+			if($scope.date.getDate() < new Date().getDate()) {
+				$scope.date.setDate($scope.date.getDate()+1);
+				$scope.refresh();
+			}
+		}		
+
 		$scope.refresh = function() {
 		    SensorState.searchBetween({
 		        'start': new Date($scope.date).format("yyyy-mm-dd")+'-00-00',
