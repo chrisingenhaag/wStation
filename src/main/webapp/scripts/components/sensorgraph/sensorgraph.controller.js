@@ -5,8 +5,14 @@ angular.module('wStationApp')
 
 		$scope.date = new Date();
 		$scope.maxDate = new Date();
-	  	$scope.format = 'dd.MM.yyyy';
+	  $scope.format = 'dd.MM.yyyy';
 		$scope.minmaxvalues = [0,1500];
+		$scope.showValues = {
+			temperature: true,
+			humidity: true,
+			illuminance: true,
+			airpressure: true
+		};
 
 		$scope.open = function($event) {
 	    	$scope.status.opened = true;
@@ -41,27 +47,38 @@ angular.module('wStationApp')
 		    SensorState.searchBetween({
 		        'start': new Date($scope.date).format("yyyy-mm-dd")+'-00-00',
 		        'end': new Date($scope.date).format("yyyy-mm-dd")+'-23-59'
-		      }, function(data){
-		        var d = data;
-		        var data = [{key: 'Temperatur', values:[]},
-		        			{key: 'Luftfeuchtigkeit', values:[]},
-		        			{key: 'Helligkeit', values:[]},
-		        			{key: 'Luftdruck', values:[]}];
+		      }, function(d){
+		        var edata = [];
 
-		        data[0].values = d.map(function(d) {
-		        	return [new Date(d.createddate).getTime(), d.temperature];
-		        });
-		        data[1].values = d.map(function(d) {
-		        	return [new Date(d.createddate).getTime(), d.humidity];
-		        });
-		        data[2].values = d.map(function(d) {
-		        	return [new Date(d.createddate).getTime(), d.illuminance];
-		        });
-		        data[3].values = d.map(function(d) {
-		        	return [new Date(d.createddate).getTime(), d.airpressure];
-		        });
-		        $scope.d3Data = data;
-
+						if($scope.showValues.temperature) {
+							var temps = {key: 'Temperatur', values:[]};
+							temps.values = d.map(function(d) {
+			        	return [new Date(d.createddate).getTime(), d.temperature];
+			        });
+							edata.push(temps);
+						}
+						if($scope.showValues.humidity) {
+							var humidities = {key: 'Luftfeuchtigkeit', values:[]};
+							humidities.values = d.map(function(d) {
+			        	return [new Date(d.createddate).getTime(), d.humidity];
+			        });
+							edata.push(humidities);
+						}
+						if($scope.showValues.illuminance) {
+							var illuminances = {key: 'Helligkeit', values:[]};
+							illuminances.values = d.map(function(d) {
+			        	return [new Date(d.createddate).getTime(), d.illuminance];
+			        });
+							edata.push(illuminances);
+						}
+						if($scope.showValues.airpressure) {
+							var airpressures = {key: 'Luftdruck', values:[]};
+							airpressures.values = d.map(function(d) {
+			        	return [new Date(d.createddate).getTime(), d.airpressure];
+			        });
+							edata.push(airpressures);
+						}
+		        $scope.d3Data = edata;
 		      });
 		};
 
