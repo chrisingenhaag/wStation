@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wStationApp')
-	.controller('GraphController', function($scope, SensorState){
+	.controller('GraphController', function($scope, SensorState, $translate){
 
 		$scope.date = new Date();
 		$scope.maxDate = new Date();
