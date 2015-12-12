@@ -86,7 +86,7 @@ repositories {
 }
 
 dependencies {
-    compile("com.tinkerforge:tinkerforge:2.1.5")
+    compile("com.tinkerforge:tinkerforge:2.1.6")
     compile("joda-time:joda-time")
     compile("org.jadira.usertype:usertype.jodatime:2.0.1")
 
