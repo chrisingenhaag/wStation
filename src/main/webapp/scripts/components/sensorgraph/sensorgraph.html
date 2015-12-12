@@ -1,11 +1,8 @@
-<h2>Grafische Darstellung</h2>
+<h2>{{ 'sensorgraph.title' | translate }}</h2>
 
 <div class="row" style="margin-bottom: 20px;">
 	<div class="col-md-6">
 		<div class="form-inline">
-			<p class="input-group">
-				<a class="btn btn-default pull-right" ng-click="goBack()"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
-			</p>
 			<p class="input-group">
 				<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" is-open="status.opened" max-date="maxDate" datepicker-options="dateOptions" close-text="Close" ng-change="refresh()" show-button-bar="false"/>
 					<span class="input-group-btn">
@@ -13,7 +10,8 @@
 				</span>
 			</p>
 			<p class="input-group">
-				<a class="btn btn-default pull-right" ng-disabled="!canGoForward()" ng-click="goForward()">Forward <i class="glyphicon glyphicon-chevron-right"></i></a>
+				<a class="btn btn-default" ng-click="goBack()"><i class="glyphicon glyphicon-chevron-left"></i> {{ 'sensorgraph.controls.back' | translate }}</a>
+				<a class="btn btn-default pull-right" ng-disabled="!canGoForward()" ng-click="goForward()">{{ 'sensorgraph.controls.forward' | translate }} <i class="glyphicon glyphicon-chevron-right"></i></a>
 			</p>
 		</div>
 		<label class="checkbox-inline">
@@ -30,7 +28,7 @@
 		</label>
 	</div>
 	<div class="col-md-2 pull-right">
-		<a class="btn btn-info pull-right" ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</a>
+		<a class="btn btn-info pull-right" ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i> {{ 'sensorgraph.controls.refresh' | translate }}</a>
 	</div>
 </div>
 
@@ -48,7 +46,7 @@
 					clipEdge="true"
 					interactive="true"
 					tooltips="true"
-	        noData="keine Daten vorhanden!">
+	        noData="{{ 'sensorgraph.graph.nodata' | translate }}">
     	</nvd3-line-chart>
 
 	</div>

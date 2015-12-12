@@ -1,0 +1,13 @@
+{
+  "sensorgraph": {
+    "title": "Graphische Darstellung",
+    "controls": {
+      "forward": "Vor",
+      "back": "Zurück",
+      "refresh": "Aktualisieren"
+    },
+    "graph": {
+      "nodata": "Keine Daten vorhanden"
+    }
+  }
+}
