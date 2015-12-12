@@ -15,6 +15,8 @@ tinker:
         saveinterval: '0 */10 * * * *'
     ip: localhost
     port: 4223
+    callback:
+      interval: 10000
 
 spring:
     profiles:

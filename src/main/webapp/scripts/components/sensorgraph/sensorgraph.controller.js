@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wStationApp')
-	.controller('GraphController', function($scope, SensorState, $translate){
+	.controller('GraphController', function($scope, SensorState){
 
 		$scope.date = new Date();
 		$scope.maxDate = new Date();
@@ -45,8 +45,8 @@ angular.module('wStationApp')
 
 		$scope.refresh = function() {
 		    SensorState.searchBetween({
-		        'start': new Date($scope.date).format("yyyy-mm-dd")+'-00-00',
-		        'end': new Date($scope.date).format("yyyy-mm-dd")+'-23-59'
+		        'start': new Date($scope.date).format('yyyy-mm-dd')+'-00-00',
+		        'end': new Date($scope.date).format('yyyy-mm-dd')+'-23-59'
 		      }, function(d){
 		        var edata = [];
 

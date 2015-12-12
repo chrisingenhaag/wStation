@@ -26,7 +26,6 @@ import de.ingenhaag.tinkerwstation.domain.SensorState;
 import de.ingenhaag.tinkerwstation.repository.SensorStateRepository;
 import de.ingenhaag.tinkerwstation.service.util.IPConnectionListener;
 
-
 @Service
 @Transactional
 public class TinkerSensorsService {
@@ -40,6 +39,9 @@ public class TinkerSensorsService {
   	private static IPConnection ipcon = null;
   	private static IPConnectionListener ipConnectionListener = null;
 
+  	@Autowired
+  	SensorStateRepository sensorStateRepository;
+  	
   	@PostConstruct
   	private void init() {
   		ipcon = new IPConnection();
@@ -67,7 +69,6 @@ public class TinkerSensorsService {
   		ipcon.addEnumerateListener(ipConnectionListener);
   		ipcon.addConnectedListener(ipConnectionListener);
 
-  		// while(!ipConnectionListener.areAllBrickletsConnected()) {
   		while (true) {
   			try {
   				ipcon.enumerate();
@@ -94,25 +95,6 @@ public class TinkerSensorsService {
   			log.error("Error connecting to tinkerforge module", e);
   		}
   	}
-
-  	public BrickletLCD20x4 getBrickletLCD() {
-  		return ipConnectionListener.getBrickletLCD();
-  	}
-
-  	public BrickletAmbientLight getBrickletAmbientLight() {
-  		return ipConnectionListener.getBrickletAmbientLight();
-  	}
-
-  	public BrickletHumidity getBrickletHumidity() {
-  		return ipConnectionListener.getBrickletHumidity();
-  	}
-
-  	public BrickletBarometer getBrickletBarometer() {
-  		return ipConnectionListener.getBrickletBarometer();
-  	}
-
-  	@Autowired
-  	SensorStateRepository sensorStateRepository;
 
   	@Scheduled(cron="${tinker.cron.saveinterval}")
   	@Timed
@@ -145,5 +127,21 @@ public class TinkerSensorsService {
   		} catch( NullPointerException e) {
   			log.error("npe ", e);
   		}
+  	}
+  	
+  	private BrickletLCD20x4 getBrickletLCD() {
+  		return ipConnectionListener.getBrickletLCD();
+  	}
+
+  	private BrickletAmbientLight getBrickletAmbientLight() {
+  		return ipConnectionListener.getBrickletAmbientLight();
+  	}
+
+  	private BrickletHumidity getBrickletHumidity() {
+  		return ipConnectionListener.getBrickletHumidity();
+  	}
+
+  	private BrickletBarometer getBrickletBarometer() {
+  		return ipConnectionListener.getBrickletBarometer();
   	}
 }

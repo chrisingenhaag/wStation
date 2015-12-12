@@ -1,10 +1,15 @@
 package de.ingenhaag.tinkerwstation.service.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletLCD20x4;
 
 public class BarometerListener implements BrickletBarometer.AirPressureListener {
 
+    private final Logger log = LoggerFactory.getLogger(BarometerListener.class);
+	
 	private BrickletBarometer brickletBarometer = null;
 
 	public void airPressure(int airPressure) {
@@ -13,16 +18,16 @@ public class BarometerListener implements BrickletBarometer.AirPressureListener 
 					airPressure / 1000.0);
 			try {
 				brickletLCD.writeLine((short) 2, (short) 0, text);
+				log.debug("Write to line 2: " + text);
 			} catch (com.tinkerforge.TinkerforgeException e) {
+				log.error("error writing airpressure to lcd");
 			}
-
-			System.out.println("Write to line 2: " + text);
 
 			int temperature;
 			try {
 				temperature = brickletBarometer.getChipTemperature();
 			} catch (com.tinkerforge.TinkerforgeException e) {
-				System.out.println("Could not get temperature: " + e);
+				log.error("Could not get temperature: ", e);
 				return;
 			}
 
@@ -31,19 +36,18 @@ public class BarometerListener implements BrickletBarometer.AirPressureListener 
 					0xDF);
 			try {
 				brickletLCD.writeLine((short) 3, (short) 0, text);
-			} catch (com.tinkerforge.TinkerforgeException e) {
-				System.out.println(e);
-			}
-
-			System.out.println("Write to line 3: "
+				log.debug("Write to line 3: "
 					+ text.replace((char) 0xDF, '°'));
+			} catch (com.tinkerforge.TinkerforgeException e) {
+				log.error("error writing temperature to lcd", e);
+			}
 		}
 	}
 
 	private BrickletLCD20x4 brickletLCD;
 	
-	public BarometerListener(BrickletBarometer brickletBarometer, IPConnectionListener ipConnectionListener) {
-		this.brickletBarometer = brickletBarometer;
+	public BarometerListener(IPConnectionListener ipConnectionListener) {
+		this.brickletBarometer = ipConnectionListener.getBrickletBarometer();
 		this.brickletLCD = ipConnectionListener.getBrickletLCD();
 	}
 	

@@ -1,13 +1,22 @@
 package de.ingenhaag.tinkerwstation.service.util;
 
 import com.tinkerforge.IPConnection;
+
 import com.tinkerforge.BrickletLCD20x4;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletBarometer;
 
 public class IPConnectionListener implements IPConnection.EnumerateListener,
 		IPConnection.ConnectedListener {
+	
+    private final Logger log = LoggerFactory.getLogger(IPConnectionListener.class);
+	
 	private IPConnection ipcon = null;
 
 	private BrickletLCD20x4 brickletLCD;
@@ -15,7 +24,8 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 	private BrickletHumidity brickletHumidity;
 	private BrickletBarometer brickletBarometer;
 
-	private static long callackInterval = 10000;
+	@Value("${tinker.callback.interval}")
+	private static long callackInterval;
 	
 	public IPConnectionListener(IPConnection ipcon) {
 		this.ipcon = ipcon;
@@ -31,45 +41,42 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 					brickletLCD = new BrickletLCD20x4(uid, ipcon);
 					brickletLCD.clearDisplay();
 					brickletLCD.backlightOn();
-					System.out.println("LCD 20x4 initialized");
+					log.info("LCD 20x4 initialized");
 				} catch (com.tinkerforge.TinkerforgeException e) {
 					brickletLCD = null;
-					System.out.println("LCD 20x4 init failed: " + e);
+					log.error("LCD 20x4 init failed: ", e);
 				}
 			} else if (deviceIdentifier == BrickletAmbientLight.DEVICE_IDENTIFIER) {
 				try {
 					brickletAmbientLight = new BrickletAmbientLight(uid, ipcon);
 					brickletAmbientLight.setIlluminanceCallbackPeriod(callackInterval);
 					brickletAmbientLight
-							.addIlluminanceListener(new AmbientLightListener(
-									this));
-					System.out.println("Ambient Light initialized");
+							.addIlluminanceListener(new AmbientLightListener(this));
+					log.info("Ambient Light initialized");
 				} catch (com.tinkerforge.TinkerforgeException e) {
 					brickletAmbientLight = null;
-					System.out.println("Ambient Light init failed: " + e);
+					log.error("Ambient Light init failed: ", e);
 				}
 			} else if (deviceIdentifier == BrickletHumidity.DEVICE_IDENTIFIER) {
 				try {
 					brickletHumidity = new BrickletHumidity(uid, ipcon);
 					brickletHumidity.setHumidityCallbackPeriod(callackInterval);
-					brickletHumidity.addHumidityListener(new HumidityListener(
-							this));
-					System.out.println("Humidity initialized");
+					brickletHumidity.addHumidityListener(new HumidityListener(this));
+					log.info("Humidity initialized");
 				} catch (com.tinkerforge.TinkerforgeException e) {
 					brickletHumidity = null;
-					System.out.println("Humidity init failed: " + e);
+					log.error("Humidity init failed: ", e);
 				}
 			} else if (deviceIdentifier == BrickletBarometer.DEVICE_IDENTIFIER) {
 				try {
 					brickletBarometer = new BrickletBarometer(uid, ipcon);
 					brickletBarometer.setAirPressureCallbackPeriod(callackInterval);
 					brickletBarometer
-							.addAirPressureListener(new BarometerListener(
-									brickletBarometer, this));
-					System.out.println("Barometer initialized");
+							.addAirPressureListener(new BarometerListener(this));
+					log.info("Barometer initialized");
 				} catch (com.tinkerforge.TinkerforgeException e) {
 					brickletBarometer = null;
-					System.out.println("Barometer init failed: " + e);
+					log.error("Barometer init failed: ", e);
 				}
 			}
 		}
@@ -77,20 +84,20 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 
 	public void connected(short connectedReason) {
 		if (connectedReason == IPConnection.CONNECT_REASON_AUTO_RECONNECT) {
-			System.out.println("Auto Reconnect");
+			log.info("Auto Reconnect");
 			
 			while (true) {
 				try {
 					ipcon.enumerate();
 					break;
 				} catch (com.tinkerforge.NotConnectedException e) {
-					System.out.println(e);
+					log.error("Error reconnecting tinkerforge statio");
 				}
 
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException ei) {
-					System.out.println(ei);
+					log.error("Reconnection interrupted", ei);
 				}
 			}
 		}
