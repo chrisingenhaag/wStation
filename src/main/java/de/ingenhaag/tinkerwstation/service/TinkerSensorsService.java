@@ -36,6 +36,10 @@ public class TinkerSensorsService {
   	private String HOST;
   	@Value("${tinker.port}")
   	private int PORT;
+  	
+  	@Value("${tinker.callback.interval}")
+  	private int tinkerCallbackInterval; 
+  	
   	private static IPConnection ipcon = null;
   	private static IPConnectionListener ipConnectionListener = null;
 
@@ -65,7 +69,7 @@ public class TinkerSensorsService {
   			}
   		}
 
-  		ipConnectionListener = new IPConnectionListener(ipcon);
+  		ipConnectionListener = new IPConnectionListener(ipcon, tinkerCallbackInterval);
   		ipcon.addEnumerateListener(ipConnectionListener);
   		ipcon.addConnectedListener(ipConnectionListener);
 

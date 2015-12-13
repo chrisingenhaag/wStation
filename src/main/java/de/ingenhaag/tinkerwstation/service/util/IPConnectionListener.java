@@ -6,7 +6,6 @@ import com.tinkerforge.BrickletLCD20x4;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletHumidity;
@@ -24,11 +23,11 @@ public class IPConnectionListener implements IPConnection.EnumerateListener,
 	private BrickletHumidity brickletHumidity;
 	private BrickletBarometer brickletBarometer;
 
-	@Value("${tinker.callback.interval}")
-	private static long callackInterval;
+	private long callackInterval;
 	
-	public IPConnectionListener(IPConnection ipcon) {
+	public IPConnectionListener(IPConnection ipcon, int callBackInterval) {
 		this.ipcon = ipcon;
+		this.callackInterval = callBackInterval;
 	}
 
 	public void enumerate(String uid, String connectedUid, char position,
