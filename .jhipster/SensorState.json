@@ -1,0 +1,33 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "temperature",
+            "fieldType": "Double"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "airpressure",
+            "fieldType": "Double"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "humidity",
+            "fieldType": "Double"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "illuminance",
+            "fieldType": "Double"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "createddate",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20151208205738",
+    "dto": "no",
+    "pagination": "pagination"
+}

@@ -1,0 +1,26 @@
+{
+    "wStationApp": {
+        "sensorState" : {
+            "home": {
+                "title": "SensorStates",
+                "createLabel": "Créer un nouveau SensorState",
+                "createOrEditLabel": "Créer ou éditer un SensorState"
+            },
+            "created": "Un nouveau SensorState a été créé avec l'identifiant {{ param }}",
+            "updated": "Le SensorState avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le SensorState avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le SensorState {{ id }} ?"
+            },
+            "detail": {
+                "title": "SensorState"
+            },
+            "temperature": "Temperature",
+            "airpressure": "Airpressure",
+            "humidity": "Humidity",
+            "illuminance": "Illuminance",
+            "createddate": "Createddate"
+        }
+    }
+}
+

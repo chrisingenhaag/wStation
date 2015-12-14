@@ -1,0 +1,25 @@
+{
+    "wStationApp": {
+        "sensorState" : {
+            "home": {
+                "title": "Sensorstatus",
+                "createLabel": "Einen neuen Sensorstatus erstellen",
+                "createOrEditLabel": "Einen Sensorstatus erstellen oder bearbeiten"
+            },
+            "created": "Ein neuer Sensorstatus wurde erstellt mit Id {{ param }}",
+            "updated": "Ein Sensorstatus wurde aktualisiert mit Id {{ param }}",
+            "deleted": "Ein Sensorstatus wurde gelöscht mit Id {{ param }}",
+            "delete": {
+                "question": "Sind Sie sicher, dass Sie Sensorstatus {{ id }} löschen möchten?"
+            },
+            "detail": {
+                "title": "Sensorstatus"
+            },
+            "temperature": "Temperatur",
+            "airpressure": "Luftdruck",
+            "humidity": "Luftfeuchtigkeit",
+            "illuminance": "Helligkeit",
+            "createddate": "Datum"
+        }
+    }
+}
