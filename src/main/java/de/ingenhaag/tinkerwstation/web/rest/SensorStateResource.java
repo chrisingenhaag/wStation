@@ -1,31 +1,36 @@
 package de.ingenhaag.tinkerwstation.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Optional;
 
-import de.ingenhaag.tinkerwstation.domain.SensorState;
-import de.ingenhaag.tinkerwstation.repository.SensorStateRepository;
-import de.ingenhaag.tinkerwstation.web.rest.util.HeaderUtil;
-import de.ingenhaag.tinkerwstation.web.rest.util.PaginationUtil;
+import javax.inject.Inject;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Optional;
+import com.codahale.metrics.annotation.Timed;
+
+import de.ingenhaag.tinkerwstation.domain.SensorState;
+import de.ingenhaag.tinkerwstation.repository.SensorStateRepository;
+import de.ingenhaag.tinkerwstation.web.rest.util.HeaderUtil;
+import de.ingenhaag.tinkerwstation.web.rest.util.PaginationUtil;
 
 /**
  * REST controller for managing SensorState.
@@ -49,7 +54,7 @@ public class SensorStateResource {
     public ResponseEntity<SensorState> createSensorState(@RequestBody SensorState sensorState) throws URISyntaxException {
         log.debug("REST request to save SensorState : {}", sensorState);
         if (sensorState.getId() != null) {
-            return ResponseEntity.badRequest().header("Failure", "A new sensorState cannot already have an ID").body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("sensorState", "idexists", "A new sensorState cannot already have an ID")).body(null);
         }
         SensorState result = sensorStateRepository.save(sensorState);
         return ResponseEntity.created(new URI("/api/sensorStates/" + result.getId()))
@@ -84,6 +89,7 @@ public class SensorStateResource {
     @Timed
     public ResponseEntity<List<SensorState>> getAllSensorStates(Pageable pageable)
         throws URISyntaxException {
+        log.debug("REST request to get a page of SensorStates");
         Page<SensorState> page = sensorStateRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/sensorStates");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
@@ -98,9 +104,10 @@ public class SensorStateResource {
     @Timed
     public ResponseEntity<SensorState> getSensorState(@PathVariable Long id) {
         log.debug("REST request to get SensorState : {}", id);
-        return Optional.ofNullable(sensorStateRepository.findOne(id))
-            .map(sensorState -> new ResponseEntity<>(
-                sensorState,
+        SensorState sensorState = sensorStateRepository.findOne(id);
+        return Optional.ofNullable(sensorState)
+            .map(result -> new ResponseEntity<>(
+                result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -117,7 +124,7 @@ public class SensorStateResource {
         sensorStateRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("sensorState", id.toString())).build();
     }
-    
+
     /**
      * GET  /sensorStatesBetween -> get all SensorStates between to ZonedDateTime values
      */
@@ -131,10 +138,10 @@ public class SensorStateResource {
     	ZonedDateTime s = start.toGregorianCalendar().toZonedDateTime();
     	ZonedDateTime e = end.toGregorianCalendar().toZonedDateTime();
     	log.debug("REST request to get all SensorStates between {} and {}",s, e);
-    	
+
     	List<SensorState> results = sensorStateRepository.findByCreateddateBetween(s, e);
     	log.debug("results {}", results.size());
-    	
+
 //    	return new ResponseEntity<List<SensorState>>(sensorStateRepository.findAll(), HttpStatus.OK);
     	return Optional.ofNullable(results)
     			.map(sensorState -> new ResponseEntity<>(
@@ -142,5 +149,5 @@ public class SensorStateResource {
     					HttpStatus.OK))
     			.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    
+
 }

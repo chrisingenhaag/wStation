@@ -26,4 +26,11 @@ public class HeaderUtil {
     public static HttpHeaders createEntityDeletionAlert(String entityName, String param) {
         return createAlert("wStationApp." + entityName + ".deleted", param);
     }
+
+    public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-wStationApp-error", "error." + errorKey);
+        headers.add("X-wStationApp-params", entityName);
+        return headers;
+    }
 }

@@ -127,7 +127,7 @@ public class SensorStateResourceIntTest {
         sensorStateRepository.saveAndFlush(sensorState);
 
         // Get all the sensorStates
-        restSensorStateMockMvc.perform(get("/api/sensorStates"))
+        restSensorStateMockMvc.perform(get("/api/sensorStates?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(sensorState.getId().intValue())))

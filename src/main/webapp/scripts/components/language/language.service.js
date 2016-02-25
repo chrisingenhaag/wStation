@@ -28,10 +28,6 @@ angular.module('wStationApp')
  */
     .constant('LANGUAGES', [
         'en', 'fr', 'de'
-        //JHipster will add new languages here
+        // jhipster-needle-006 - JHipster will add new languages here
     ]
 );
-
-
-
-

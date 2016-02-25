@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('wStationApp').controller('SensorStateDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'SensorState',
-        function($scope, $stateParams, $modalInstance, entity, SensorState) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'SensorState',
+        function($scope, $stateParams, $uibModalInstance, entity, SensorState) {
 
         $scope.sensorState = entity;
         $scope.load = function(id) {
@@ -13,7 +13,7 @@ angular.module('wStationApp').controller('SensorStateDialogController',
 
         var onSaveSuccess = function (result) {
             $scope.$emit('wStationApp:sensorStateUpdate', result);
-            $modalInstance.close(result);
+            $uibModalInstance.close(result);
             $scope.isSaving = false;
         };
 
@@ -31,6 +31,6 @@ angular.module('wStationApp').controller('SensorStateDialogController',
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
 }]);

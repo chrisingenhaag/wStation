@@ -11,6 +11,7 @@ import de.ingenhaag.tinkerwstation.service.MailService;
 import de.ingenhaag.tinkerwstation.service.UserService;
 import de.ingenhaag.tinkerwstation.web.rest.dto.KeyAndPasswordDTO;
 import de.ingenhaag.tinkerwstation.web.rest.dto.UserDTO;
+import de.ingenhaag.tinkerwstation.web.rest.util.HeaderUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -123,6 +124,10 @@ public class AccountResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<String> saveAccount(@RequestBody UserDTO userDTO) {
+        Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
+        if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userDTO.getLogin()))) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use")).body(null);
+        }
         return userRepository
             .findOneByLogin(SecurityUtils.getCurrentUser().getUsername())
             .map(u -> {

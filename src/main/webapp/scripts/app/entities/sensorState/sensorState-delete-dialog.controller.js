@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('wStationApp')
-	.controller('SensorStateDeleteController', function($scope, $modalInstance, entity, SensorState) {
+	.controller('SensorStateDeleteController', function($scope, $uibModalInstance, entity, SensorState) {
 
         $scope.sensorState = entity;
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
         $scope.confirmDelete = function (id) {
             SensorState.delete({id: id},
                 function () {
-                    $modalInstance.close(true);
+                    $uibModalInstance.close(true);
                 });
         };
 

@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('wStationApp')
-    .controller('SensorStateController', function ($scope, $state, $modal, SensorState, ParseLinks) {
-      
+    .controller('SensorStateController', function ($scope, $state, SensorState, ParseLinks) {
+
         $scope.sensorStates = [];
-        $scope.page = 0;
+        $scope.predicate = 'id';
+        $scope.reverse = true;
+        $scope.page = 1;
         $scope.loadAll = function() {
-            SensorState.query({page: $scope.page, size: 20}, function(result, headers) {
+            SensorState.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
+                $scope.totalItems = headers('X-Total-Count');
                 $scope.sensorStates = result;
             });
         };

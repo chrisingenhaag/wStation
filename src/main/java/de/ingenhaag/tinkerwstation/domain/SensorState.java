@@ -35,6 +35,7 @@ public class SensorState implements Serializable {
     @Column(name = "createddate")
     private ZonedDateTime createddate;
 
+    
     public Long getId() {
         return id;
     }
