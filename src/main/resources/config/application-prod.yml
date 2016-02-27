@@ -13,7 +13,7 @@
 tinker:
     cron:
         saveinterval: '0 */10 * * * *'
-    ip: localhost
+    host: localhost
     port: 4223
     callback:
       interval: 10000

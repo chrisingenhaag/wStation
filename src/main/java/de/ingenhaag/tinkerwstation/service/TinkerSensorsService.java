@@ -4,16 +4,15 @@ import java.time.ZonedDateTime;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.codahale.metrics.annotation.Timed;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletHumidity;
@@ -22,6 +21,8 @@ import com.tinkerforge.IPConnection;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
+import de.ingenhaag.tinkerwstation.config.tinker.TinkerConfiguration;
+import de.ingenhaag.tinkerwstation.config.tinker.TinkerScheduling;
 import de.ingenhaag.tinkerwstation.domain.SensorState;
 import de.ingenhaag.tinkerwstation.repository.SensorStateRepository;
 import de.ingenhaag.tinkerwstation.service.util.IPConnectionListener;
@@ -32,14 +33,12 @@ public class TinkerSensorsService {
 
     private final Logger log = LoggerFactory.getLogger(TinkerSensorsService.class);
 
-    @Value("${tinker.ip}")
-  	private String HOST;
-  	@Value("${tinker.port}")
-  	private int PORT;
+    @Inject
+    private TinkerConfiguration tinkerConfig;
   	
-  	@Value("${tinker.callback.interval}")
-  	private int tinkerCallbackInterval; 
-  	
+    @Inject
+    private TinkerScheduling scheduling;
+    
   	private static IPConnection ipcon = null;
   	private static IPConnectionListener ipConnectionListener = null;
 
@@ -52,7 +51,7 @@ public class TinkerSensorsService {
 
   		while (true) {
   			try {
-  				ipcon.connect(HOST, PORT);
+  				ipcon.connect(tinkerConfig.getHost(), tinkerConfig.getPort());
   				break;
   			} catch (java.net.UnknownHostException e) {
   				log.error("Error connecting to tinkerforge module", e);
@@ -69,7 +68,7 @@ public class TinkerSensorsService {
   			}
   		}
 
-  		ipConnectionListener = new IPConnectionListener(ipcon, tinkerCallbackInterval);
+  		ipConnectionListener = new IPConnectionListener(ipcon, tinkerConfig.getCallback().getInterval());
   		ipcon.addEnumerateListener(ipConnectionListener);
   		ipcon.addConnectedListener(ipConnectionListener);
 
@@ -88,6 +87,14 @@ public class TinkerSensorsService {
   			}
   		}
 
+  		scheduling.taskScheduler().schedule(new Runnable() {
+			
+			@Override
+			public void run() {
+				saveState();
+			}
+		}, new CronTrigger(tinkerConfig.getCron().getSaveinterval()));
+  		
   	}
 
   	@PreDestroy
@@ -100,9 +107,9 @@ public class TinkerSensorsService {
   		}
   	}
 
-  	@Scheduled(cron="${tinker.cron.saveinterval}")
-  	@Timed
-  	public void saveState() {
+  	//@Scheduled(cron="${tinker.cron.saveinterval}")
+  	//@Timed
+  	private void saveState() {
   		double temperature;
   		double airpressure;
   		double humidity;
