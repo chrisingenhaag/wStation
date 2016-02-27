@@ -1,6 +1,7 @@
 package de.ingenhaag.tinkerwstation.service;
 
 import java.time.ZonedDateTime;
+import java.util.concurrent.ScheduledFuture;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -41,54 +42,17 @@ public class TinkerSensorsService {
     
   	private static IPConnection ipcon = null;
   	private static IPConnectionListener ipConnectionListener = null;
-
+  	private ScheduledFuture<?> task;
+  	
+  	
   	@Autowired
   	SensorStateRepository sensorStateRepository;
   	
   	@PostConstruct
   	private void init() {
-  		ipcon = new IPConnection();
-
-  		while (true) {
-  			try {
-  				ipcon.connect(tinkerConfig.getHost(), tinkerConfig.getPort());
-  				break;
-  			} catch (java.net.UnknownHostException e) {
-  				log.error("Error connecting to tinkerforge module", e);
-  			} catch (java.io.IOException e) {
-  				log.error("Error connecting to tinkerforge module", e);
-  			} catch (com.tinkerforge.AlreadyConnectedException e) {
-  				log.error("Error connecting to tinkerforge module", e);
-  			}
-
-  			try {
-  				Thread.sleep(1000);
-  			} catch (InterruptedException ei) {
-  				log.error("Error connecting to tinkerforge module", ei);
-  			}
-  		}
-
-  		ipConnectionListener = new IPConnectionListener(ipcon, tinkerConfig.getCallback().getInterval());
-  		ipcon.addEnumerateListener(ipConnectionListener);
-  		ipcon.addConnectedListener(ipConnectionListener);
-
-  		while (true) {
-  			try {
-  				ipcon.enumerate();
-  				break;
-  			} catch (com.tinkerforge.NotConnectedException e) {
-  				log.error("Error connecting to tinkerforge module", e);
-  			}
-
-  			try {
-  				Thread.sleep(1000);
-  			} catch (InterruptedException ei) {
-  				log.error("Error connecting to tinkerforge module", ei);
-  			}
-  		}
-
-  		scheduling.taskScheduler().schedule(new Runnable() {
-			
+  		initTinkerForgeStation();
+  		
+  		task = scheduling.taskScheduler().schedule(new Runnable() {
 			@Override
 			public void run() {
 				saveState();
@@ -107,6 +71,49 @@ public class TinkerSensorsService {
   		}
   	}
 
+  	private void initTinkerForgeStation() {
+  		ipcon = new IPConnection();
+
+  		while (true) {
+  			try {
+  				ipcon.connect(tinkerConfig.getHost(), tinkerConfig.getPort());
+  				break;
+  			} catch (java.net.UnknownHostException e) {
+  				log.error("Error connecting - unkown host", e);
+  			} catch (java.io.IOException e) {
+  				log.error("Error connecting - io exception", e);
+  			} catch (com.tinkerforge.AlreadyConnectedException e) {
+  				log.error("Error connecting - already connected", e);
+  			}
+
+  			try {
+  				Thread.sleep(1000);
+  			} catch (InterruptedException ei) {
+  				log.error("Error waiting", ei);
+  			}
+  		}
+
+  		ipConnectionListener = new IPConnectionListener(ipcon, tinkerConfig.getCallback().getInterval());
+  		ipcon.addEnumerateListener(ipConnectionListener);
+  		ipcon.addConnectedListener(ipConnectionListener);
+
+  		while (true) {
+  			try {
+  				ipcon.enumerate();
+  				break;
+  			} catch (com.tinkerforge.NotConnectedException e) {
+  				log.error("Error broadcasting an enumerate request, not connected to tinkerforge", e);
+  			}
+
+  			try {
+  				Thread.sleep(1000);
+  			} catch (InterruptedException ei) {
+  				log.error("Error waiting", ei);
+  			}
+  		}
+
+  	}
+  	
   	//@Scheduled(cron="${tinker.cron.saveinterval}")
   	//@Timed
   	private void saveState() {
