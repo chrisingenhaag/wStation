@@ -67,14 +67,28 @@ public class TinkerSensorsService {
   			log.info("closing connection");
   			ipcon.disconnect();
   		} catch (com.tinkerforge.NotConnectedException e) {
-  			log.error("Error connecting to tinkerforge module", e);
+  			log.error("Could not close connection because it´s not connected", e);
   		}
   	}
 
+  	public boolean refreshScheduledSaveProcess() {
+  		if(task.cancel(false)) {
+  			return false;
+  		}
+  		task = scheduling.taskScheduler().schedule(new Runnable() {
+			@Override
+			public void run() {
+				saveState();
+			}
+		}, new CronTrigger(tinkerConfig.getCron().getSaveinterval()));
+  		return true;
+  	}
+  	
   	private void initTinkerForgeStation() {
   		ipcon = new IPConnection();
 
-  		while (true) {
+  		int connectTries = 2;
+  		while (connectTries > 0) {
   			try {
   				ipcon.connect(tinkerConfig.getHost(), tinkerConfig.getPort());
   				break;
@@ -91,13 +105,15 @@ public class TinkerSensorsService {
   			} catch (InterruptedException ei) {
   				log.error("Error waiting", ei);
   			}
+  			connectTries--;
   		}
 
   		ipConnectionListener = new IPConnectionListener(ipcon, tinkerConfig.getCallback().getInterval());
   		ipcon.addEnumerateListener(ipConnectionListener);
   		ipcon.addConnectedListener(ipConnectionListener);
 
-  		while (true) {
+  		int enumerateTries = 2;
+  		while (enumerateTries > 0) {
   			try {
   				ipcon.enumerate();
   				break;
@@ -110,12 +126,11 @@ public class TinkerSensorsService {
   			} catch (InterruptedException ei) {
   				log.error("Error waiting", ei);
   			}
+  			enumerateTries--;
   		}
 
   	}
   	
-  	//@Scheduled(cron="${tinker.cron.saveinterval}")
-  	//@Timed
   	private void saveState() {
   		double temperature;
   		double airpressure;
