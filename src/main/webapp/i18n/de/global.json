@@ -6,7 +6,8 @@
             "home": "Startseite",
             "sensorgraph": {
             	"main": "Sensordaten",
-            	"graph": "Graphen"
+            	"graph": "Graphen",
+              "settings": "Einstellungen"
             },
             "jhipster-needle-003": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
@@ -119,5 +120,5 @@
         "emailexists": "E-mail is already in use!",
         "idexists": "A new {{entityName}} cannot already have an ID"
     },
-    "footer": "Dies ist Ihre Fußzeile"
+    "footer": ""
 }

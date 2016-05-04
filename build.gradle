@@ -68,7 +68,7 @@ if (project.hasProperty('prod')) {
 }
 
 group = 'de.ingenhaag.tinkerwstation'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0-SNAPSHOT'
 
 description = ''
 
