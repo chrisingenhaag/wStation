@@ -1,53 +1,53 @@
 <h2>{{ 'sensorgraph.title' | translate }}</h2>
 
 <div class="row" style="margin-bottom: 20px;">
-	<div class="col-md-6">
-		<div class="form-inline">
-			<p class="input-group">
-				<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" is-open="status.opened" max-date="maxDate" datepicker-options="dateOptions" close-text="Close" ng-change="refresh()" show-button-bar="false"/>
-					<span class="input-group-btn">
-					<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-				</span>
-			</p>
-			<p class="input-group">
-				<a class="btn btn-default" ng-click="goBack()"><i class="glyphicon glyphicon-chevron-left"></i> {{ 'sensorgraph.controls.back' | translate }}</a>
-				<a class="btn btn-default pull-right" ng-disabled="!canGoForward()" ng-click="goForward()">{{ 'sensorgraph.controls.forward' | translate }} <i class="glyphicon glyphicon-chevron-right"></i></a>
-			</p>
-		</div>
-		<label class="checkbox-inline">
-		  <input type="checkbox" id="inlineCheckbox1" ng-model="showValues.temperature" ng-change="refresh()" > {{ 'wStationApp.sensorState.temperature' | translate }}
-		</label>
-		<label class="checkbox-inline">
-		  <input type="checkbox" id="inlineCheckbox2" ng-model="showValues.humidity" ng-change="refresh()" > {{ 'wStationApp.sensorState.humidity' | translate }}
-		</label>
-		<label class="checkbox-inline">
-		  <input type="checkbox" id="inlineCheckbox3" ng-model="showValues.illuminance" ng-change="refresh()" > {{ 'wStationApp.sensorState.illuminance' | translate }}
-		</label>
-		<label class="checkbox-inline">
-		  <input type="checkbox" id="inlineCheckbox3" ng-model="showValues.airpressure" ng-change="refresh()" > {{ 'wStationApp.sensorState.airpressure' | translate }}
-		</label>
-	</div>
-	<div class="col-md-2 pull-right">
-		<a class="btn btn-info pull-right" ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i> {{ 'sensorgraph.controls.refresh' | translate }}</a>
-	</div>
+  <div class="col-md-6">
+    <div class="form-inline">
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" is-open="status.opened" max-date="maxDate" datepicker-options="dateOptions" close-text="Close" ng-change="refresh()" show-button-bar="false"/>
+          <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+      <p class="input-group">
+        <a class="btn btn-default" ng-click="goBack()"><i class="glyphicon glyphicon-chevron-left"></i> {{ 'sensorgraph.controls.back' | translate }}</a>
+        <a class="btn btn-default pull-right" ng-disabled="!canGoForward()" ng-click="goForward()">{{ 'sensorgraph.controls.forward' | translate }} <i class="glyphicon glyphicon-chevron-right"></i></a>
+      </p>
+    </div>
+    <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox1" ng-model="showValues.temperature" ng-change="refresh()" > {{ 'wStationApp.sensorState.temperature' | translate }}
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox2" ng-model="showValues.humidity" ng-change="refresh()" > {{ 'wStationApp.sensorState.humidity' | translate }}
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox3" ng-model="showValues.illuminance" ng-change="refresh()" > {{ 'wStationApp.sensorState.illuminance' | translate }}
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox3" ng-model="showValues.airpressure" ng-change="refresh()" > {{ 'wStationApp.sensorState.airpressure' | translate }}
+    </label>
+  </div>
+  <div class="col-md-2 pull-right">
+    <a class="btn btn-info pull-right" ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i> {{ 'sensorgraph.controls.refresh' | translate }}</a>
+  </div>
 </div>
 
 <div class="row">
-	<div class="col-md-12">
-		<nvd3-line-chart
-        	data="d3Data"
-	        showXAxis="true"
-	        showYAxis="true"
-	        tooltips="true"
-	        xAxisTickFormat="xAxisTickFormatFunction()"
-	        forcey="minmaxvalues"
-	        interpolate="linear"
-	        height="500"
-					clipEdge="true"
-					interactive="true"
-					tooltips="true"
-	        noData="{{ 'sensorgraph.graph.nodata' | translate }}">
-    	</nvd3-line-chart>
+  <div class="col-md-12">
+    <nvd3-line-chart
+          data="d3Data"
+          showXAxis="true"
+          showYAxis="true"
+          tooltips="true"
+          xAxisTickFormat="xAxisTickFormatFunction()"
+          forcey="minmaxvalues"
+          interpolate="linear"
+          height="500"
+          clipEdge="true"
+          interactive="true"
+          tooltips="true"
+          noData="{{ 'sensorgraph.graph.nodata' | translate }}">
+      </nvd3-line-chart>
 
-	</div>
+  </div>
 </div>
