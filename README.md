@@ -1,4 +1,4 @@
-# wStation
+# wStation [![Build Status](https://travis-ci.org/chrisingenhaag/wStation.svg?branch=master)](https://travis-ci.org/chrisingenhaag/wStation)
 
 This is a [JHipster][] based web application for the [tinkerforge][] weather station. The application saves the weather stations sensor values quartz-cron based. The sensor data is accessible via d3 graph integration.
 
