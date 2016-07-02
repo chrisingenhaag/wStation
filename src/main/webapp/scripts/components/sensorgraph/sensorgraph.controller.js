@@ -5,6 +5,7 @@ angular.module('wStationApp')
 
     $scope.date = new Date();
     $scope.maxDate = new Date();
+    $scope.maxDate.setHours(0, 0, 0, 0);
     $scope.format = 'dd.MM.yyyy';
     $scope.minmaxvalues = [0, 1500];
     $scope.showValues = {
@@ -34,12 +35,12 @@ angular.module('wStationApp')
 
     $scope.goForward = function() {
       if ($scope.canGoForward()) {
-        $scope.date.setDate($scope.date.getDate()+1);
+        $scope.date.setDate($scope.date.getDate() + 1);
         $scope.refresh();
       }
     };
     $scope.canGoForward = function() {
-      return $scope.date.getDate() < new Date().getDate();
+      return $scope.date < $scope.maxDate;
     };
 
 
@@ -80,6 +81,7 @@ angular.module('wStationApp')
             }
             $scope.d3Data = edata;
           });
+
     };
 
     $scope.xAxisTickFormatFunction = function() {
