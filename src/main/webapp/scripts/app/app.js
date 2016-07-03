@@ -109,7 +109,7 @@ angular.module('wStationApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pasca
             urlTemplate: 'i18n/{lang}/{part}.json'
         });
 
-        $translateProvider.preferredLanguage('de');
+        $translateProvider.preferredLanguage('en');
         $translateProvider.useCookieStorage();
         $translateProvider.useSanitizeValueStrategy('escaped');
         $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
